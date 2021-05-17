@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.iti_community_flutter">
+    package="com.iti.iti_community_flutter">
    <application
         android:label="iti_community_flutter"
         android:icon="@mipmap/ic_launcher">

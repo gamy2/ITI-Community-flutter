@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/views/pages/login.dart';
+import 'package:iti_community_flutter/views/pages/reg.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: login("ITI-Community"),
+      // home: login("ITI-Community"),
+      home: Registration(),
     );
   }
 }
