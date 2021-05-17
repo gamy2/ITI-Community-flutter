@@ -31,6 +31,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   hexcolor: ^2.0.3
   direct_select_flutter: ^1.1.1
+  firebase_auth: ^1.1.4
+  cloud_firestore: ^2.1.0
 
 dev_dependencies:
   flutter_test:
