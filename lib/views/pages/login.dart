@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:iti_community_flutter/services/auth.dart';
-import 'package:iti_community_flutter/views/widgets/login_widgets/login_img.dart';
 
 class login extends StatefulWidget {
   final String title;
@@ -13,7 +11,7 @@ class login extends StatefulWidget {
 class _loginState extends State<login> {
   var Email;
   var Password;
-  final AuthService _auth = AuthService();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,14 +71,6 @@ class _loginState extends State<login> {
                     ),
                   ),
                 ),
-                onTap: () async {
-                  dynamic login = await _auth.signInEmail(Email, Password);
-                  if (login == null) {
-                    print('error');
-                  } else {
-                    print(login);
-                  }
-                },
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 22.0),

@@ -1,6 +1,6 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:iti_community_flutter/views/pages/login.dart';
-import 'package:iti_community_flutter/views/pages/reg.dart';
+import 'package:iti_community_flutter/views/pages/login2.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,17 +9,66 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    final init = Firebase.initializeApp();
+    return FutureBuilder(
+        future: init,
+        builder: (context, snapshoot) {
+          if (snapshoot.hasError) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Errorlog(snapshoot.error.toString()),
+            );
+          } else if (snapshoot.hasData) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Login2(),
+            );
+          } else {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: Loading(),
+            );
+          }
+        }
+        // title: 'Flutter Demo',
+        // theme: ThemeData(
+        //   primarySwatch: Colors.blue,
+        // ),
+        // home: login("ITI-Community"),
+        // // home: Registration(),
+        );
+  }
+}
+
+class Errorlog extends StatelessWidget {
+  Errorlog(this.log);
+  final String log;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Column(
+            children: [Icon(Icons.error), Text(log)],
+          ),
+        ),
       ),
-      // home: login("ITI-Community"),
-      home: Registration(),
     );
   }
 }
 
+class Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+  }
+}
 // class MyHomePage extends StatefulWidget {
 //   MyHomePage({Key key, this.title}) : super(key: key);
 
