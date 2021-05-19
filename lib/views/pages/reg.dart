@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Registration extends StatefulWidget {
+  final Function togglescreen;
+
+  const Registration({Key key, this.togglescreen}) : super(key: key);
   @override
   _RegistrationState createState() => _RegistrationState();
 }
@@ -224,7 +227,21 @@ class _RegistrationState extends State<Registration> {
                         ],
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 22),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Text("go to login"),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    InkWell(
+                      child: Text("Login",
+                          style: TextStyle(
+                              color: HexColor("801818"),
+                              fontWeight: FontWeight.bold)),
+                      onTap: () => widget.togglescreen(),
+                    )
+                  ])
                 ],
               )),
             )
