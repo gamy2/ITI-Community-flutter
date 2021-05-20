@@ -159,10 +159,11 @@ class _SingleGroupState extends State<SingleGroup> {
                         ),
                       ),
                     ),
+
                     Column(
-                      children:<GroupCard>
-                          snapshot.data.docs.map((e) => new GroupCard(e.id, e.data()),
-                    )
+                      children:
+                          snapshot.data.docs.map((e) => GroupCard(e.id, e.data()),
+                    ).toList())
                   ],
                 ),
               ),

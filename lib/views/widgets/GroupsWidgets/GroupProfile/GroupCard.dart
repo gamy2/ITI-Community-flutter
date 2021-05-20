@@ -21,7 +21,7 @@ class _GroupCardState extends State<GroupCard> {
               children: [
                 ListTile(
                   leading: Icon(Icons.arrow_drop_down_circle),
-                  title: const Text('Card title 1'),
+                  title: Text(widget.data['Body']),
                   subtitle: Text(
                     'Secondary Text',
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
