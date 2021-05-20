@@ -9,6 +9,8 @@ class AuthServices with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  // static final LocalStorage store = new LocalStorage('ITI');
+  static var userID;
 
   Future Login(String email, String password) async {
     setLoading(true);
@@ -16,6 +18,8 @@ class AuthServices with ChangeNotifier {
       UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
       User user = authResult.user;
+      // store.setItem('uid', user.uid);
+      userID = user.uid;
       setLoading(false);
     } on SocketException {
       setLoading(false);

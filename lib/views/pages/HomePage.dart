@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
-import 'package:iti_community_flutter/views/pages/Groups.dart';
+import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
