@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:like_button/like_button.dart';
 
 class GroupCard extends StatefulWidget {
   final String id;
@@ -11,37 +13,96 @@ class GroupCard extends StatefulWidget {
 class _GroupCardState extends State<GroupCard> {
   @override
   Widget build(BuildContext context) {
+    var userid = AuthServices.userID;
+    var a = widget.data['Likes'].contains(userid);
+
     return Container(
       child: Column(
         children: [
           Card(
             clipBehavior: Clip.antiAlias,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ListTile(
-                  leading: Icon(Icons.arrow_drop_down_circle),
-                  title: Text(widget.data['Body']),
+                  leading: SizedBox(
+                    height: 60,
+                    width: 60,
+                    child: Image(
+                      image: NetworkImage(widget.data['Auther']['avatar']),
+                    ),
+                  ),
+                  title: Row(
+                    children: [
+                      Text(widget.data['Auther']['firstName']),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(widget.data['Auther']['lastName']),
+                    ],
+                  ),
                   subtitle: Text(
-                    'Secondary Text',
+                    widget.data['Auther']['jobTitle'],
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    'Greyhound divisively hello coldly wonderfully marginally far upon excluding.',
+                    widget.data['Body'],
                     style: TextStyle(color: Colors.black.withOpacity(0.6)),
                   ),
+                ),
+                Wrap(
+                  alignment: WrapAlignment.start,
+                  children: widget.data['postImg']
+                      .map<Widget>((imgUrl) => SizedBox(
+                            height: 100,
+                            width: 100,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image(
+                                image: NetworkImage(imgUrl),
+                                height: 80,
+                              ),
+                            ),
+                          ))
+                      .toList(),
                 ),
                 ButtonBar(
                   alignment: MainAxisAlignment.start,
                   children: [
-                    FlatButton(
-                      textColor: const Color(0xFF6200EE),
-                      onPressed: () {
-                        // Perform some action
+                    LikeButton(
+                      size: 30,
+                      circleColor: CircleColor(
+                          start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                      bubblesColor: BubblesColor(
+                        dotPrimaryColor: Color(0xff33b5e5),
+                        dotSecondaryColor: Color(0xff0099cc),
+                      ),
+                      likeBuilder: (bool isLiked) {
+                        return Icon(
+                          a ? Icons.favorite : Icons.favorite_border,
+                          color: a ? Colors.grey : Colors.grey,
+                          size: 30,
+                        );
                       },
-                      child: const Text('ACTION 1'),
+                      likeCount: widget.data['Likes'].length,
+                      countBuilder: (int count, bool isLiked, String text) {
+                        var color = a ? Colors.deepPurpleAccent : Colors.grey;
+                        Widget result;
+                        if (count == 0) {
+                          result = Text(
+                            "Like",
+                            style: TextStyle(color: color),
+                          );
+                        } else
+                          result = Text(
+                            text,
+                            style: TextStyle(color: color),
+                          );
+                        return result;
+                      },
                     ),
                     FlatButton(
                       textColor: const Color(0xFF6200EE),
@@ -52,7 +113,6 @@ class _GroupCardState extends State<GroupCard> {
                     ),
                   ],
                 ),
-                Image.asset('assets/images/1200x400.jpg'),
               ],
             ),
           ),

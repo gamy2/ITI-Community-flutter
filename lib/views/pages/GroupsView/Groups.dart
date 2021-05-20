@@ -13,6 +13,7 @@ class _GroupsState extends State<Groups> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MyStatelessWidget(),
     );
   }

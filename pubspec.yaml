@@ -36,6 +36,8 @@ dependencies:
   firebase_auth: "^0.20.1"
   cloud_firestore: "^0.16.0+1"
   firebase_storage: "^7.0.0"
+  like_button: ^2.0.2
+
 
 dev_dependencies:
   flutter_test:
