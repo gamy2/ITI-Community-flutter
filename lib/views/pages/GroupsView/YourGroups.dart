@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/singleGroup.dart';
+import 'package:iti_community_flutter/views/widgets/Spinner.dart';
 
 class YourGroups extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _YourGroupsState extends State<YourGroups> {
           return Text('Something went wrong');
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Text("Loading");
+          return Spinner();
         }
         return Scaffold(
           body: new ListView(

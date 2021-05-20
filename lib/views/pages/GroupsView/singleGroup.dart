@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupCard.dart';
+import 'package:iti_community_flutter/views/widgets/Spinner.dart';
 
 class SingleGroup extends StatefulWidget {
   final String id;
@@ -25,7 +26,7 @@ class _SingleGroupState extends State<SingleGroup> {
             return Text('Something went wrong');
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
+            return Spinner();
           }
           return Scaffold(
             appBar: AppBar(
@@ -159,11 +160,12 @@ class _SingleGroupState extends State<SingleGroup> {
                         ),
                       ),
                     ),
-
                     Column(
-                      children:
-                          snapshot.data.docs.map((e) => GroupCard(e.id, e.data()),
-                    ).toList())
+                        children: snapshot.data.docs
+                            .map(
+                              (e) => GroupCard(e.id, e.data()),
+                            )
+                            .toList())
                   ],
                 ),
               ),
