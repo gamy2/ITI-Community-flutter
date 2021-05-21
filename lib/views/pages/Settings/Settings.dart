@@ -10,7 +10,8 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    final belal = Provider.of<AuthServices>(context);
+    final authServices = Provider.of<AuthServices>(context);
+    var userDetails = authServices.storage.getItem("userDetails");
     return Scaffold(
       body: Center(
         child: Column(
@@ -28,7 +29,7 @@ class _SettingsState extends State<Settings> {
                         color: Colors.blue[800]),
                   ),
                   onTap: () {
-                    belal.logout();
+                    authServices.logout();
                     // print(belal.fb);
                     // var s = AuthServices.store.getItem('uid');
                     // print(s);
@@ -51,7 +52,7 @@ class _SettingsState extends State<Settings> {
                   ),
                   onTap: () {
                     // belal.logout();
-                    print(belal.userDetails);
+                    print(userDetails["avatar"]);
                     // var s = AuthServices.store.getItem('uid');
                     // print(s);
                     // var s = AuthServices.userID;
