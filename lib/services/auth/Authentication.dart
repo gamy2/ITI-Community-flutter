@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,7 @@ class AuthServices with ChangeNotifier {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   // static final LocalStorage store = new LocalStorage('ITI');
   static var userID;
+  var userDetails;
 
   Future Login(String email, String password) async {
     setLoading(true);
@@ -20,6 +22,18 @@ class AuthServices with ChangeNotifier {
       User user = authResult.user;
       // store.setItem('uid', user.uid);
       userID = user.uid;
+      FirebaseFirestore.instance
+          .collection('users-details')
+          .doc(userID)
+          .get()
+          .then((DocumentSnapshot documentSnapshot) async {
+        if (documentSnapshot.exists) {
+          userDetails = await documentSnapshot.data();
+        } else {
+          print('Document does not exist on the database');
+        }
+      });
+
       setLoading(false);
     } on SocketException {
       setLoading(false);

@@ -25,16 +25,6 @@ class _RequestedGroupsState extends State<RequestedGroups> {
               print(s);
             },
           ),
-          InkWell(
-            child: Text('Logout'),
-            onTap: () {
-              belal.logout();
-              // var s = AuthServices.store.getItem('uid');
-              // print(s);
-              // var s = AuthServices.userID;
-              // print(s);
-            },
-          ),
         ],
       )),
     );
