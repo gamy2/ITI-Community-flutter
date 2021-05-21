@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group),
+            icon: Icon(Icons.connect_without_contact),
             label: 'Groups',
             backgroundColor: HexColor("801818"),
           ),
