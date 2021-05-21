@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
 
 class AuthServices with ChangeNotifier {
   bool _isLoading = false;
@@ -13,28 +14,29 @@ class AuthServices with ChangeNotifier {
   // static final LocalStorage store = new LocalStorage('ITI');
   static var userID;
   var userDetails;
-
+  final LocalStorage storage = new LocalStorage('todo_app');
   Future Login(String email, String password) async {
     setLoading(true);
     try {
       UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      User user = authResult.user;
-      // store.setItem('uid', user.uid);
-      userID = user.uid;
+
       FirebaseFirestore.instance
           .collection('users-details')
-          .doc(userID)
+          .doc(authResult.user.uid)
           .get()
-          .then((DocumentSnapshot documentSnapshot) async {
+          .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          userDetails = await documentSnapshot.data();
+          storage.setItem('userDetails', documentSnapshot.data());
+          userDetails = documentSnapshot.data();
+          User user = authResult.user;
+          // store.setItem('uid', user.uid);
+          userID = user.uid;
+          setLoading(false);
         } else {
           print('Document does not exist on the database');
         }
       });
-
-      setLoading(false);
     } on SocketException {
       setLoading(false);
       setErrorMessage("No Internet!");
@@ -46,7 +48,6 @@ class AuthServices with ChangeNotifier {
 
   Future logout() async {
     await firebaseAuth.signOut();
-    userDetails = "";
   }
 
   void setLoading(val) {
