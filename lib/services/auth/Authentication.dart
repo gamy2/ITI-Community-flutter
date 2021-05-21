@@ -46,6 +46,7 @@ class AuthServices with ChangeNotifier {
 
   Future logout() async {
     await firebaseAuth.signOut();
+    userDetails = "";
   }
 
   void setLoading(val) {
