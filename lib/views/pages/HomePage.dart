@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
+import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -29,10 +30,7 @@ class _HomePageState extends State<HomePage> {
       'Index 3: Test',
       style: optionStyle,
     ),
-    Text(
-      'Index 4: Settings',
-      style: optionStyle,
-    ),
+    Settings()
   ];
   void _onItemTapped(int index) {
     setState(() {

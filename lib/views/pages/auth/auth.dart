@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iti_community_flutter/views/pages/login.dart';
-import 'package:iti_community_flutter/views/pages/reg.dart';
+import 'package:iti_community_flutter/views/pages/auth/login.dart';
+import 'package:iti_community_flutter/views/pages/auth/reg.dart';
 
 class AuthLoginAndRegistration extends StatefulWidget {
   @override

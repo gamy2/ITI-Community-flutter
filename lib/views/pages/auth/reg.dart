@@ -23,12 +23,15 @@ class _RegistrationState extends State<Registration> {
     var dropdownValue = 'One';
     var dropdownValue2 = 'One';
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "REGISTRATION",
-            style: TextStyle(fontWeight: FontWeight.bold),
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(45),
+          child: AppBar(
+            title: Text(
+              "REGISTRATION",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            backgroundColor: HexColor("801818"),
           ),
-          backgroundColor: HexColor("801818"),
         ),
         body: SingleChildScrollView(
           child: Center(

@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/services/wrapper.dart';
-import 'package:iti_community_flutter/views/pages/auth.dart';
+
 import 'package:provider/provider.dart';
 
 void main() {

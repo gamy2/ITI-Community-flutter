@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/views/pages/HomePage.dart';
-import 'package:iti_community_flutter/views/pages/auth.dart';
-import 'package:iti_community_flutter/views/pages/login.dart';
+import 'package:iti_community_flutter/views/pages/auth/auth.dart';
+
 import 'package:provider/provider.dart';
 
 class Wrapper extends StatelessWidget {
