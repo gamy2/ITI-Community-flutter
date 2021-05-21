@@ -5,6 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
+import 'package:iti_community_flutter/views/pages/home/appHome.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,10 +18,7 @@ class _HomePageState extends State<HomePage> {
   static TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+    Home(),
     Groups(),
     Text(
       'Index 2: School',
