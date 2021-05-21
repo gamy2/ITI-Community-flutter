@@ -12,7 +12,7 @@ class AuthServices with ChangeNotifier {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   // static final LocalStorage store = new LocalStorage('ITI');
   static var userID;
-  var userDetails;
+  static var userDetails;
 
   Future Login(String email, String password) async {
     setLoading(true);

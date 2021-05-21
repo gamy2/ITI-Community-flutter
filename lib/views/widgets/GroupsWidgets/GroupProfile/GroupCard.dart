@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:like_button/like_button.dart';
@@ -13,8 +14,36 @@ class GroupCard extends StatefulWidget {
 class _GroupCardState extends State<GroupCard> {
   @override
   Widget build(BuildContext context) {
+    List<dynamic> likes = <dynamic>[];
     var userid = AuthServices.userID;
     var a = widget.data['Likes'].contains(userid);
+    Future<bool> giveLike(bool isLiked) async {
+      final Future<List> _fb2 = FirebaseFirestore.instance
+          .collection('PostGroup')
+          .doc(widget.id)
+          .get()
+          // ignore: missing_return
+          .then((value) async {
+        List.from(value.data()['Likes']).forEach((element) {
+          likes.add(element);
+        });
+        if (a == true) {
+          var rem = likes.indexOf(userid);
+          likes.removeAt(rem);
+          FirebaseFirestore.instance
+              .collection('PostGroup')
+              .doc(widget.id)
+              .update({'Likes': likes});
+        } else {
+          likes.add(userid);
+          FirebaseFirestore.instance
+              .collection('PostGroup')
+              .doc(widget.id)
+              .update({'Likes': likes});
+        }
+      });
+      return !isLiked;
+    }
 
     return Container(
       child: Column(
@@ -73,6 +102,7 @@ class _GroupCardState extends State<GroupCard> {
                   alignment: MainAxisAlignment.start,
                   children: [
                     LikeButton(
+                      onTap: giveLike,
                       size: 30,
                       circleColor: CircleColor(
                           start: Color(0xff00ddff), end: Color(0xff0099cc)),
@@ -107,7 +137,7 @@ class _GroupCardState extends State<GroupCard> {
                     FlatButton(
                       textColor: const Color(0xFF6200EE),
                       onPressed: () {
-                        // Perform some action
+                        giveLike(true);
                       },
                       child: const Text('ACTION 2'),
                     ),
