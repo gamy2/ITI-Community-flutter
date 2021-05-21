@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +12,11 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
-    var userDetails = authServices.storage.getItem("userDetails");
+    final userDetails = authServices.storage.getItem("userDetails");
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: HexColor("801818"),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
