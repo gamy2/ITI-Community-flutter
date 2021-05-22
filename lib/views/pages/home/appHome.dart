@@ -16,6 +16,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
     final userDetails = authServices.storage.getItem("userDetails");
+    if (userDetails == null) {
+      authServices.logout();
+    }
 
     return Scaffold(
       body: Container(
@@ -39,9 +42,10 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            Profile(userDetails),
-                                      ));
+
+                                          builder: (context) =>
+                                              Profile(AuthServices.userID)));
+
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
