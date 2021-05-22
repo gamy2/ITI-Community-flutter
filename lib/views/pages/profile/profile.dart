@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/main.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
-  Profile(this.userDetails);
-  final userDetails;
+  Profile(this.clickedID);
+  final clickedID;
+
   @override
   _ProfileState createState() => _ProfileState();
 }
@@ -12,6 +16,14 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthServices>(context);
+    authServices.getDataById(widget.clickedID);
+    final userDetails = authServices.storage.getItem("clickedDetails");
+    if (userDetails == null) {
+      authServices.logout();
+    }
+    print(userDetails);
+
     return Scaffold(
       body: Container(
         color: HexColor("801818"),
@@ -35,6 +47,12 @@ class _ProfileState extends State<Profile> {
                                 }),
                             SizedBox(
                               width: 350,
+                              child: InkWell(
+                                child: Text("data"),
+                                onTap: () {
+                                  print(userDetails);
+                                },
+                              ),
                             ),
                             InkWell(
                                 child: Icon(Icons.settings),

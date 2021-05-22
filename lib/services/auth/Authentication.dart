@@ -61,6 +61,20 @@ class AuthServices with ChangeNotifier {
     notifyListeners();
   }
 
+  Future getDataById(id) async {
+    FirebaseFirestore.instance
+        .collection('users-details')
+        .doc(id)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (documentSnapshot.exists) {
+        storage.setItem('clickedDetails', documentSnapshot.data());
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
+
   Stream<User> get user =>
       firebaseAuth.authStateChanges().map((event) => event);
 }
