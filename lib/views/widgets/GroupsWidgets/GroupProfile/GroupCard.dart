@@ -64,6 +64,7 @@ class _GroupCardState extends State<GroupCard> {
           }
 
           return Container(
+            padding: EdgeInsets.only(bottom: 10.0),
             child: Column(
               children: [
                 Card(
