@@ -56,6 +56,7 @@ class _SettingsState extends State<Settings> {
                   ),
                   onTap: () {
                     // belal.logout();
+                    // print(belal.userDetails);
                     print(userDetails["avatar"]);
                     // var s = AuthServices.store.getItem('uid');
                     // print(s);
