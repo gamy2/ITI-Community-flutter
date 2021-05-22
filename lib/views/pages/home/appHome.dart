@@ -42,8 +42,10 @@ class _HomeState extends State<Home> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
+
                                           builder: (context) =>
                                               Profile(AuthServices.userID)));
+
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
