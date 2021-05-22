@@ -26,9 +26,12 @@ class _CommentsState extends State<Comments> {
           children: [
             ListTile(
               minVerticalPadding: 0,
-              leading: Image(
-                image: NetworkImage(widget.data['User']['avatar']),
-                width: 35,
+              leading: Container(
+                height: 100,
+                child: CircleAvatar(
+                  backgroundImage: NetworkImage(widget.data['User']['avatar']),
+                  radius: 40,
+                ),
               ),
               title: Row(
                 children: [
