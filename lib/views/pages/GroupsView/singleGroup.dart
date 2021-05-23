@@ -15,10 +15,12 @@ class SingleGroup extends StatefulWidget {
 class _SingleGroupState extends State<SingleGroup> {
   String postBody;
   final _formKey = GlobalKey<FormState>();
+  final controlPostBody = TextEditingController();
+
   CollectionReference post = FirebaseFirestore.instance.collection('PostGroup');
-  Future writePost() async {
+  Future writePost(String body) async {
     return await post.add({
-      'Body': postBody,
+      'Body': body,
       'GroupId': widget.id,
       'Likes': [],
       'PostedDate': DateTime.now(),
@@ -41,20 +43,19 @@ class _SingleGroupState extends State<SingleGroup> {
     Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
         .collection('PostGroup')
         .orderBy('PostedDate', descending: true)
+        // .limit(1)
         .where("GroupId", isEqualTo: widget.id)
-        .limit(1)
         .snapshots();
 
-    void showMore() {
-      _fb2 = FirebaseFirestore.instance
-          .collection('PostGroup')
-          .limit(1)
-          .where("GroupId", isEqualTo: widget.id)
-          .orderBy('PostedDate', descending: true)
-          .startAfter([last]).snapshots();
-      print(_fb2);
-      print(last);
-    }
+    // void showMore() {
+    //   _fb2 = FirebaseFirestore.instance
+    //       .collection('PostGroup')
+    //       .where("GroupId", isEqualTo: widget.id)
+    //       .orderBy('PostedDate', descending: true)
+    //       .startAfter([last]).snapshots();
+    //   print(_fb2);
+    //   print(last);
+    // }
 
     return StreamBuilder<QuerySnapshot>(
         stream: _fb2,
@@ -65,8 +66,20 @@ class _SingleGroupState extends State<SingleGroup> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Spinner();
           }
-          // last = snapshot.data.docs[snapshot.data.docs.length - 1];
-          last = snapshot.data.docs.map((e) => e.id);
+
+          last = snapshot.data.docs[snapshot.data.docs.length - 1];
+          // last = snapshot.data.docs.map((e) => e.id);
+          void showMore() {
+            _fb2 = FirebaseFirestore.instance
+                .collection('PostGroup')
+                .where("GroupId", isEqualTo: widget.id)
+                // .limit(1)
+                .orderBy('PostedDate', descending: true)
+                .startAfter([last]).snapshots();
+            print(_fb2);
+            print(last);
+          }
+
           print(last);
           return Scaffold(
             appBar: AppBar(
@@ -184,16 +197,14 @@ class _SingleGroupState extends State<SingleGroup> {
                                                           .collapsed(
                                                               hintText:
                                                                   'What Do You Thinking About?!..'),
+                                                      // ignore: missing_return
                                                       validator: (value) {
                                                         value.isEmpty;
-                                                        value.length > 5;
+                                                        // ignore: unnecessary_statements
+                                                        value.length > 3;
                                                       },
-                                                      // onChanged:
-                                                      //     (String value) {
-                                                      //   setState(() {
-                                                      //     postBody = value;
-                                                      //   });
-                                                      // },
+                                                      controller:
+                                                          controlPostBody,
                                                     ),
                                                   ),
                                                 ),
@@ -231,12 +242,14 @@ class _SingleGroupState extends State<SingleGroup> {
                                                         ),
                                                       ),
                                                       onTap: () {
-                                                        if (_formKey
-                                                            .currentState
-                                                            .validate()) {
-                                                          _formKey.currentState
-                                                              .save();
-                                                          writePost();
+                                                        final String body =
+                                                            controlPostBody
+                                                                .text;
+                                                        if (body != null ||
+                                                            body.length > 3) {
+                                                          writePost(body);
+                                                          Navigator.of(context)
+                                                              .pop();
                                                         }
                                                       },
                                                     ),
@@ -282,8 +295,8 @@ class _SingleGroupState extends State<SingleGroup> {
                               (e) => GroupCard(e.id, e.data()),
                             )
                             .toList()),
-                    TextButton(
-                        onPressed: () {
+                    InkWell(
+                        onTap: () {
                           showMore();
                         },
                         child: Text('Show More'))

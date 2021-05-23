@@ -1,4 +1,4 @@
-
+# This is a generated file; do not edit or check into version control.
 cloud_firestore=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\cloud_firestore-0.16.0+1\\
 cloud_firestore_web=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\cloud_firestore_web-0.3.0+2\\
 firebase_auth=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\firebase_auth-0.20.1\\
@@ -13,4 +13,3 @@ path_provider=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub
 path_provider_linux=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-0.0.1+2\\
 path_provider_macos=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_macos-0.0.4+8\\
 path_provider_windows=C:\\Users\\Goodh\\Desktop\\My Works\\Flutter Mobile\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-0.0.5\\
-

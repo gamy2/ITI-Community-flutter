@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 
 class Comments extends StatefulWidget {
   final String id;
@@ -35,20 +36,29 @@ class _CommentsState extends State<Comments> {
                     radius: 40,
                   ),
                 ),
-                title: Row(
-                  children: [
-                    Text(
-                      widget.data['User']['firstName'],
-                      style: TextStyle(fontSize: 15),
-                    ),
-                    SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      widget.data['User']['lastName'],
-                      style: TextStyle(fontSize: 15),
-                    )
-                  ],
+                title: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                Profile(widget.data['User']['id'])));
+                  },
+                  child: Row(
+                    children: [
+                      Text(
+                        widget.data['User']['firstName'],
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(
+                        width: 3,
+                      ),
+                      Text(
+                        widget.data['User']['lastName'],
+                        style: TextStyle(fontSize: 15),
+                      )
+                    ],
+                  ),
                 ),
                 subtitle: Text(
                   widget.data['User']['jobTitle'],
