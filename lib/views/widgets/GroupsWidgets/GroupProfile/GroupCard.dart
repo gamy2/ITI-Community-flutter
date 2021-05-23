@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/Comments.dart';
-import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/SinglePost.dart';
 import 'package:like_button/like_button.dart';
 
 class GroupCard extends StatefulWidget {
@@ -33,9 +33,9 @@ class _GroupCardState extends State<GroupCard> {
           if (snapshot.hasError) {
             return Text('Something went wrong');
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Spinner();
-          }
+          // if (snapshot.connectionState == ConnectionState.waiting) {
+          //   return Spinner();
+          // }
 
           Future<bool> giveLike(bool isLiked) async {
             final Future<List> _fb2 = FirebaseFirestore.instance
@@ -161,12 +161,25 @@ class _GroupCardState extends State<GroupCard> {
                               return result;
                             },
                           ),
-                          FlatButton(
-                            textColor: const Color(0xFF6200EE),
-                            onPressed: () {
-                              // giveLike(true);
-                            },
-                            child: const Text('ACTION 2'),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SinglePost(widget.id, widget.data))),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.mode_comment_outlined),
+                                  Text(
+                                    '  Comment',
+                                    style: TextStyle(
+                                        color: Colors.grey, fontSize: 15),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -176,7 +189,37 @@ class _GroupCardState extends State<GroupCard> {
                               .map(
                                 (e) => Comments(e.id, e.data()),
                               )
-                              .toList())
+                              .toList()),
+                      if (snapshot.data.docs.length > 3)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SinglePost(widget.id, widget.data))),
+                            child: Text(
+                              'Load More Comments',
+                              style: TextStyle(color: Colors.blue[300]),
+                            ),
+                          ),
+                        ),
+                      if (snapshot.data.docs.length == 0)
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SinglePost(widget.id, widget.data))),
+                            child: Text(
+                              'Be First One Comment',
+                              style: TextStyle(color: Colors.blue[300]),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
