@@ -24,6 +24,8 @@ class _GroupCardState extends State<GroupCard> {
         .collection('PostGroup')
         .doc(widget.id)
         .collection('Comments')
+        .orderBy('CommentDate', descending: true)
+        .limit(4)
         .snapshots();
     return StreamBuilder<QuerySnapshot>(
         stream: _fb2,
@@ -63,11 +65,11 @@ class _GroupCardState extends State<GroupCard> {
             return !isLiked;
           }
 
-          return Container(
-            padding: EdgeInsets.only(bottom: 10.0),
-            child: Column(
-              children: [
-                Card(
+          return Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(bottom: 10.0),
+                child: Card(
                   clipBehavior: Clip.antiAlias,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +164,7 @@ class _GroupCardState extends State<GroupCard> {
                           FlatButton(
                             textColor: const Color(0xFF6200EE),
                             onPressed: () {
-                              giveLike(true);
+                              // giveLike(true);
                             },
                             child: const Text('ACTION 2'),
                           ),
@@ -178,8 +180,8 @@ class _GroupCardState extends State<GroupCard> {
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         });
   }

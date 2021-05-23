@@ -34,12 +34,28 @@ class _SingleGroupState extends State<SingleGroup> {
     });
   }
 
+  var last;
+  var len;
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
+    Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
         .collection('PostGroup')
+        .orderBy('PostedDate', descending: true)
         .where("GroupId", isEqualTo: widget.id)
+        .limit(1)
         .snapshots();
+
+    void showMore() {
+      _fb2 = FirebaseFirestore.instance
+          .collection('PostGroup')
+          .limit(1)
+          .where("GroupId", isEqualTo: widget.id)
+          .orderBy('PostedDate', descending: true)
+          .startAfter([last]).snapshots();
+      print(_fb2);
+      print(last);
+    }
+
     return StreamBuilder<QuerySnapshot>(
         stream: _fb2,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -49,6 +65,9 @@ class _SingleGroupState extends State<SingleGroup> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Spinner();
           }
+          // last = snapshot.data.docs[snapshot.data.docs.length - 1];
+          last = snapshot.data.docs.map((e) => e.id);
+          print(last);
           return Scaffold(
             appBar: AppBar(
               title: Text(widget.data['Name']),
@@ -169,12 +188,12 @@ class _SingleGroupState extends State<SingleGroup> {
                                                         value.isEmpty;
                                                         value.length > 5;
                                                       },
-                                                      onChanged:
-                                                          (String value) {
-                                                        setState(() {
-                                                          postBody = value;
-                                                        });
-                                                      },
+                                                      // onChanged:
+                                                      //     (String value) {
+                                                      //   setState(() {
+                                                      //     postBody = value;
+                                                      //   });
+                                                      // },
                                                     ),
                                                   ),
                                                 ),
@@ -262,7 +281,12 @@ class _SingleGroupState extends State<SingleGroup> {
                             .map(
                               (e) => GroupCard(e.id, e.data()),
                             )
-                            .toList())
+                            .toList()),
+                    TextButton(
+                        onPressed: () {
+                          showMore();
+                        },
+                        child: Text('Show More'))
                   ],
                 ),
               ),
