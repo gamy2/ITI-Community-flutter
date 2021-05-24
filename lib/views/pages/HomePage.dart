@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
@@ -54,18 +52,18 @@ class _HomePageState extends State<HomePage> {
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.connect_without_contact),
+            icon: Icon(Icons.group),
             label: 'Groups',
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.group),
-            label: 'School',
+            icon: Icon(Icons.connect_without_contact),
+            label: 'Network',
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'Test',
+            icon: Icon(Icons.work),
+            label: 'Jobs',
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(

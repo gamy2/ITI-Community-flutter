@@ -11,9 +11,11 @@ class AuthServices with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  // static final LocalStorage store = new LocalStorage('ITI');
   static var userID;
 
   var userDetails;
+
   final LocalStorage storage = new LocalStorage('iti');
   Future Login(String email, String password) async {
     setLoading(true);
