@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -16,9 +18,12 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
     final userDetails = authServices.storage.getItem("userDetails");
-    if (userDetails == null) {
-      authServices.logout();
-    }
+
+    Timer.periodic(new Duration(seconds: 1), (timer) {
+      if (userDetails == null) {
+        authServices.logout();
+      }
+    });
 
     return Scaffold(
       body: Container(
@@ -36,16 +41,15 @@ class _HomeState extends State<Home> {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
                                 onTap: () {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-
                                           builder: (context) =>
                                               Profile(AuthServices.userID)));
-
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.all(5.0),
@@ -57,26 +61,20 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                               SizedBox(
-                                width: 120,
-                              ),
-                              SizedBox(
-                                  width: 60,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: DecoratedBox(
-                                        child: Center(
-                                            child: Text("+",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20))),
-                                        decoration: BoxDecoration(
-                                          color: HexColor("e4e1e1"),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        )),
-                                  )),
-                              SizedBox(
-                                width: 120,
+                                width: 65,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: DecoratedBox(
+                                      child: Center(
+                                          child: Text("+",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20))),
+                                      decoration: BoxDecoration(
+                                        color: HexColor("e4e1e1"),
+                                        borderRadius: BorderRadius.circular(15),
+                                      )),
+                                ),
                               ),
                               InkWell(
                                   child: Icon(Icons.settings),
