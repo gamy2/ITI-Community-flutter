@@ -69,7 +69,8 @@ class AuthServices with ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        storage.setItem('clickedDetails', documentSnapshot.data());
+        await storage.setItem('clickedDetails', "");
+        await storage.setItem('clickedDetails', documentSnapshot.data());
       } else {
         print('Document does not exist on the database');
       }
