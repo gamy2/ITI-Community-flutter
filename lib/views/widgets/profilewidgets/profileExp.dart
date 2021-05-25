@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class profileExp extends StatefulWidget {
+  profileExp(this.experiences);
+  final experiences;
   @override
   _profileExpState createState() => _profileExpState();
 }
