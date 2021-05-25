@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/singleGroup.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
 
