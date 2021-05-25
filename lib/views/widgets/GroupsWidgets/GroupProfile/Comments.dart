@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
+import 'package:provider/provider.dart';
 
 class Comments extends StatefulWidget {
   final String id;
@@ -138,18 +139,19 @@ class _CommentsState extends State<Comments> {
       }
     }
 
-    final userid = AuthServices.userID;
+    final authServices = Provider.of<AuthServices>(context);
+    final userid = authServices.storage.getItem('uid');
+
     return Column(children: [
       Card(
-        color: Colors.grey[350],
         child: DecoratedBox(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[350],
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black12, spreadRadius: 2, blurRadius: 100),
-            ],
+            color: Colors.grey[200],
+            // boxShadow: [
+            //   BoxShadow(
+            //       color: Colors.black54, spreadRadius: 100, blurRadius: 100),
+            // ],
           ),
           child: Column(
             children: [
@@ -158,12 +160,15 @@ class _CommentsState extends State<Comments> {
                   Expanded(
                     child: ListTile(
                       minVerticalPadding: 0,
-                      leading: Container(
-                        height: 100,
-                        child: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(widget.data['User']['avatar']),
-                          radius: 40,
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: Container(
+                          width: 50,
+                          child: CircleAvatar(
+                            backgroundImage:
+                                NetworkImage(widget.data['User']['avatar']),
+                            radius: 35,
+                          ),
                         ),
                       ),
                       title: InkWell(
@@ -220,7 +225,8 @@ class _CommentsState extends State<Comments> {
                   children: [
                     Text(
                       widget.data['Body'],
-                      style: TextStyle(color: Colors.black.withOpacity(0.6)),
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.6), fontSize: 14),
                     ),
                   ],
                 ),
