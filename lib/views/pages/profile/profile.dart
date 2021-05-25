@@ -49,11 +49,11 @@ class _ProfileState extends State<Profile> {
       });
     }
 
-    Timer.periodic(new Duration(seconds: 1), (timer) {
-      if (userDetails == null) {
-        authServices.logout();
-      }
-    });
+    // Timer.periodic(new Duration(seconds: 1), (timer) {
+    //   if (userDetails == null) {
+    //     authServices.logout();
+    //   }
+    // });
     if (!isLoaded) {
       return new Container(
           color: Colors.white,

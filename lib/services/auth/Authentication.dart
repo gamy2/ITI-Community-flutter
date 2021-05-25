@@ -33,7 +33,7 @@ class AuthServices with ChangeNotifier {
           userDetails = documentSnapshot.data();
           User user = authResult.user;
           // store.setItem('uid', user.uid);
-          userID = user.uid;
+          storage.setItem("uid", user.uid);
           setLoading(false);
         } else {
           print('Document does not exist on the database');
