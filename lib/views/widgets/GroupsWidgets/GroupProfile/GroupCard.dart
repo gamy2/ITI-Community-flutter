@@ -189,6 +189,7 @@ class _GroupCardState extends State<GroupCard> {
             return !isLiked;
           }
 
+          print(userid);
           return Column(
             children: [
               Container(
@@ -226,17 +227,18 @@ class _GroupCardState extends State<GroupCard> {
                               ),
                             ),
                           ),
-                          PopupMenuButton<String>(
-                            onSelected: handleClick,
-                            itemBuilder: (BuildContext context) {
-                              return {'Edit', 'Delete'}.map((String choice) {
-                                return PopupMenuItem<String>(
-                                  value: choice,
-                                  child: Text(choice),
-                                );
-                              }).toList();
-                            },
-                          ),
+                          if (userid == widget.data['Auther']['id'])
+                            PopupMenuButton<String>(
+                              onSelected: handleClick,
+                              itemBuilder: (BuildContext context) {
+                                return {'Edit', 'Delete'}.map((String choice) {
+                                  return PopupMenuItem<String>(
+                                    value: choice,
+                                    child: Text(choice),
+                                  );
+                                }).toList();
+                              },
+                            ),
                         ],
                       ),
                       Padding(
