@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/singleGroup.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:provider/provider.dart';
 
 class YourGroups extends StatefulWidget {
   @override
@@ -15,6 +17,37 @@ class _YourGroupsState extends State<YourGroups> {
       FirebaseFirestore.instance.collection('Groups2').snapshots();
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthServices>(context);
+    final userid = authServices.storage.getItem('uid');
+    void getbyUsers(gid, uid, docs) async {
+      await FirebaseFirestore.instance
+          .collection('Groups2')
+          .doc(gid)
+          .collection('Users')
+          .doc(uid)
+          .get()
+          .then((value) => {
+                print(value.data()),
+                if (value.data()['Role'] == 1)
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: new ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    SingleGroup(docs.id, docs.data())));
+                      },
+                      leading: Image.network(docs.data()['Img']),
+                      title: InkWell(
+                        child: new Text(docs.data()['Name']),
+                      ),
+                    ),
+                  )
+              });
+    }
+
     // GroupService.getAllGroups();
     return StreamBuilder<QuerySnapshot>(
       stream: _fb,
@@ -29,22 +62,9 @@ class _YourGroupsState extends State<YourGroups> {
         return Scaffold(
           body: new ListView(
             children: snapshot.data.docs.map((DocumentSnapshot docs) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SingleGroup(docs.id, docs.data())));
-                  },
-                  leading: Image.network(docs.data()['Img']),
-                  title: InkWell(
-                    child: new Text(docs.data()['Name']),
-                  ),
-                ),
-              );
+              // for (var i in snapshot.data.docs) {
+              getbyUsers(docs.id, userid, docs);
+              // }
             }).toList(),
           ),
         );
