@@ -19,11 +19,11 @@ class _HomeState extends State<Home> {
     final authServices = Provider.of<AuthServices>(context);
     final userDetails = authServices.storage.getItem("userDetails");
 
-    // Timer.periodic(new Duration(seconds: 2), (timer) {
-    //   if (userDetails == null) {
-    //     authServices.logout();
-    //   }
-    // });
+    Timer.periodic(new Duration(seconds: 2), (timer) {
+      if (userDetails == null) {
+        // authServices.logout();
+      }
+    });
 
     return Scaffold(
       body: Container(
