@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
+
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
@@ -19,11 +19,9 @@ class _HomeState extends State<Home> {
     final authServices = Provider.of<AuthServices>(context);
     final userDetails = authServices.storage.getItem("userDetails");
 
-    Timer.periodic(new Duration(seconds: 2), (timer) {
-      if (userDetails == null) {
-        // authServices.logout();
-      }
-    });
+    if (userDetails == null) {
+      authServices.logout();
+    }
 
     return Scaffold(
       body: Container(
