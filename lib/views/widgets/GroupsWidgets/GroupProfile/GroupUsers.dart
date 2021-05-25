@@ -6,6 +6,7 @@ import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:provider/provider.dart';
 
 class GroupUsers extends StatefulWidget {
   final String id;
@@ -18,24 +19,9 @@ class GroupUsers extends StatefulWidget {
 class _GroupUsersState extends State<GroupUsers> {
   @override
   Widget build(BuildContext context) {
-    var uid = AuthServices.userID;
+    final authServices = Provider.of<AuthServices>(context);
+    final uid = authServices.storage.getItem('uid');
     var admins = [];
-
-    // void handleClick(String value, id) {
-    //   switch (value) {
-    //     case 'Admin':
-    //       break;
-    //     case 'Member':
-    //       break;
-    //     case 'Subscriber':
-    //       break;
-    //     case 'Delete':
-    //       GroupService.deleteUser(
-    //         widget.id,
-    //       );
-    //       break;
-    //   }
-    // }
 
     final Stream<QuerySnapshot> _fb = FirebaseFirestore.instance
         .collection('Groups2')
@@ -167,26 +153,6 @@ class _GroupUsersState extends State<GroupUsers> {
                               break;
                           }
                         },
-                        //                     PopupMenuButton<String>(
-                        // onSelected: (String result) { setState(() { _selection = result; }); },
-                        // itemBuilder: (BuildContext context) {
-                        //   const PopupMenuItem<String>(
-                        //     value: GroupService.deleteUser(widget.id, docs.id),
-                        //     child: Text('Working a lot harder'),
-                        //   ),
-                        //   const PopupMenuItem<WhyFarther>(
-                        //     value: WhyFarther.smarter,
-                        //     child: Text('Being a lot smarter'),
-                        //   ),
-                        //   const PopupMenuItem<WhyFarther>(
-                        //     value: WhyFarther.selfStarter,
-                        //     child: Text('Being a self-starter'),
-                        //   ),
-                        //   const PopupMenuItem<WhyFarther>(
-                        //     value: WhyFarther.tradingCharter,
-                        //     child: Text('Placed in charge of trading charter'),
-                        //   );
-                        //           },)
                         itemBuilder: (BuildContext context) {
                           return {'Admin', 'Member', 'Subscriber', 'Delete'}
                               .map((String choice) {

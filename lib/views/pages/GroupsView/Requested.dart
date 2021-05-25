@@ -10,20 +10,15 @@ class RequestedGroups extends StatefulWidget {
 class _RequestedGroupsState extends State<RequestedGroups> {
   @override
   Widget build(BuildContext context) {
-    final belal = Provider.of<AuthServices>(context);
+    final authServices = Provider.of<AuthServices>(context);
+    final userid = authServices.storage.getItem('uid');
     return Scaffold(
       body: Center(
           child: Column(
         children: [
           InkWell(
-            child: Text('Belala'),
-            onTap: () {
-              // belal.logout();
-              // var s = AuthServices.store.getItem('uid');
-              // print(s);
-              var s = AuthServices.userID;
-              print(s);
-            },
+            child: Text('Requested Groups'),
+            onTap: () {},
           ),
         ],
       )),

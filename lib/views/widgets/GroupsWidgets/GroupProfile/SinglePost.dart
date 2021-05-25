@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/Comments.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
 import 'package:like_button/like_button.dart';
@@ -26,7 +27,8 @@ class _SinglePostState extends State<SinglePost> {
   Widget build(BuildContext context2) {
     final authServices = Provider.of<AuthServices>(context2);
     final userDetails = authServices.storage.getItem('userDetails');
-    final uid = AuthServices.userID;
+    final userid = authServices.storage.getItem('uid');
+
     CollectionReference comment = FirebaseFirestore.instance
         .collection('PostGroup')
         .doc(widget.id)
@@ -37,7 +39,7 @@ class _SinglePostState extends State<SinglePost> {
         'CommentDate': DateTime.now(),
         'postImg': [],
         'User': {
-          'id': uid,
+          'id': userid,
           'firstName': userDetails['firstName'],
           'lastName': userDetails['lastName'],
           'jobTitle': userDetails['jobTitle'],
@@ -173,7 +175,6 @@ class _SinglePostState extends State<SinglePost> {
     }
 
     List<dynamic> likes = <dynamic>[];
-    var userid = AuthServices.userID;
     var a = widget.data['Likes'].contains(userid);
 
     final Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
@@ -248,15 +249,26 @@ class _SinglePostState extends State<SinglePost> {
                                             widget.data['Auther']['avatar']),
                                       ),
                                     ),
-                                    title: Row(
-                                      children: [
-                                        Text(
-                                            widget.data['Auther']['firstName']),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text(widget.data['Auther']['lastName']),
-                                      ],
+                                    title: InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Profile(
+                                                    widget.data['Auther']
+                                                        ['id'])));
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(widget.data['Auther']
+                                              ['firstName']),
+                                          SizedBox(
+                                            width: 3,
+                                          ),
+                                          Text(widget.data['Auther']
+                                              ['lastName']),
+                                        ],
+                                      ),
                                     ),
                                     subtitle: Text(
                                       widget.data['Auther']['jobTitle'],
@@ -265,18 +277,19 @@ class _SinglePostState extends State<SinglePost> {
                                     ),
                                   ),
                                 ),
-                                PopupMenuButton<String>(
-                                  onSelected: handleClick,
-                                  itemBuilder: (BuildContext context) {
-                                    return {'Edit', 'Delete'}
-                                        .map((String choice) {
-                                      return PopupMenuItem<String>(
-                                        value: choice,
-                                        child: Text(choice),
-                                      );
-                                    }).toList();
-                                  },
-                                ),
+                                if (userid == widget.data['Auther']['id'])
+                                  PopupMenuButton<String>(
+                                    onSelected: handleClick,
+                                    itemBuilder: (BuildContext context) {
+                                      return {'Edit', 'Delete'}
+                                          .map((String choice) {
+                                        return PopupMenuItem<String>(
+                                          value: choice,
+                                          child: Text(choice),
+                                        );
+                                      }).toList();
+                                    },
+                                  ),
                               ],
                             ),
                             Padding(
@@ -284,7 +297,8 @@ class _SinglePostState extends State<SinglePost> {
                               child: Text(
                                 widget.data['Body'],
                                 style: TextStyle(
-                                    color: Colors.black.withOpacity(0.6)),
+                                    color: Colors.black.withOpacity(0.6),
+                                    fontSize: 15),
                               ),
                             ),
                             Wrap(

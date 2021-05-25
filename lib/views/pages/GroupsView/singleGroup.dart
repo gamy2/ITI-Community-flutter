@@ -72,8 +72,7 @@ class _SingleGroupState extends State<SingleGroup> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Spinner();
           }
-
-          last = snapshot.data.docs[snapshot.data.docs.length - 1];
+          // last = snapshot.data.docs[snapshot.data.docs.length - 1];
           // last = snapshot.data.docs.map((e) => e.id);
           void showMore() {
             _fb2 = FirebaseFirestore.instance
@@ -82,8 +81,6 @@ class _SingleGroupState extends State<SingleGroup> {
                 // .limit(1)
                 .orderBy('PostedDate', descending: true)
                 .startAfter([last]).snapshots();
-            print(_fb2);
-            print(last);
           }
 
           return Scaffold(
@@ -305,17 +302,32 @@ class _SingleGroupState extends State<SingleGroup> {
                         ),
                       ),
                     ),
+                    if (snapshot.data.docs.isEmpty)
+                      Column(
+                        children: [
+                          Text(
+                            'No Posts Yet',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[400]),
+                          ),
+                        ],
+                      ),
+
                     Column(
                         children: snapshot.data.docs
                             .map(
                               (e) => GroupCard(e.id, e.data()),
                             )
                             .toList()),
-                    InkWell(
-                        onTap: () {
-                          showMore();
-                        },
-                        child: Text('Show More'))
+
+                    // InkWell(
+                    //     onTap: () {
+                    //       showMore();
+                    //     },
+                    //     child: Text('Show More'))
                   ],
                 ),
               ),
