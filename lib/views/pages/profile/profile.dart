@@ -94,6 +94,7 @@ class _ProfileState extends State<Profile> {
                               InkWell(
                                   child: Icon(Icons.arrow_back),
                                   onTap: () {
+                                    dispose();
                                     Navigator.pop(context);
                                   }),
                               InkWell(
@@ -116,6 +117,7 @@ class _ProfileState extends State<Profile> {
                                           ? Icons.settings
                                           : Icons.edit),
                                   onTap: () {
+                                    dispose();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

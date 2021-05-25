@@ -244,7 +244,10 @@ class _RegistrationState extends State<Registration> {
                             style: TextStyle(
                                 color: HexColor("801818"),
                                 fontWeight: FontWeight.bold)),
-                        onTap: () => widget.togglescreen(),
+                        onTap: () {
+                          dispose();
+                          widget.togglescreen();
+                        },
                       )
                     ])
                   ],
