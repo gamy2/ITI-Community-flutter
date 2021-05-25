@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/Comments.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/SinglePost.dart';
@@ -19,14 +20,126 @@ class _GroupCardState extends State<GroupCard> {
     List<dynamic> likes = <dynamic>[];
     var userid = AuthServices.userID;
     var a = widget.data['Likes'].contains(userid);
-
+    final _formKey = GlobalKey<FormState>();
+    final controlPostBody = TextEditingController();
     void handleClick(String value) {
       switch (value) {
         case 'Edit':
-          print('Edit');
+          controlPostBody.text = widget.data['Body'];
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  insetPadding: EdgeInsets.zero,
+                  content: Stack(
+                    children: <Widget>[
+                      Positioned(
+                        // right: -40.0,
+                        top: -40.0,
+                        child: InkResponse(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: CircleAvatar(
+                            child: Icon(Icons.close),
+                            backgroundColor: Colors.red,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: double.infinity,
+                        height: 280,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Editing Post',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey[450],
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Form(
+                                key: _formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 200,
+                                        child: TextFormField(
+                                          maxLines: null,
+                                          keyboardType: TextInputType.multiline,
+                                          decoration: InputDecoration.collapsed(
+                                              hintText:
+                                                  'Type Your Edit Post Here..'),
+                                          // ignore: missing_return
+                                          validator: (value) {
+                                            value.isEmpty;
+                                            // ignore: unnecessary_statements
+                                            value.length > 3;
+                                          },
+                                          controller: controlPostBody,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Material(
+                                        color: Colors.blue[400],
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(5.0)),
+                                        child: InkWell(
+                                          highlightColor: Colors.blue[100],
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Icon(Icons.edit),
+                                                Text(
+                                                  "Edit Post",
+                                                  style: TextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          onTap: () {
+                                            final String body =
+                                                controlPostBody.text;
+                                            if (body != null ||
+                                                body.length > 3) {
+                                              GroupService.editPost(
+                                                  widget.id, body);
+                                              controlPostBody.text = '';
+                                              Navigator.of(context).pop();
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              });
           break;
         case 'Delete':
-          print('Delete');
+          GroupService.deletePost(widget.id);
           break;
       }
     }
@@ -85,40 +198,46 @@ class _GroupCardState extends State<GroupCard> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ListTile(
-                        leading: SizedBox(
-                          height: 60,
-                          width: 60,
-                          child: Image(
-                            image:
-                                NetworkImage(widget.data['Auther']['avatar']),
-                          ),
-                        ),
-                        title: Row(
-                          children: [
-                            Text(widget.data['Auther']['firstName']),
-                            SizedBox(
-                              width: 3,
+                      Row(
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              leading: SizedBox(
+                                height: 60,
+                                width: 60,
+                                child: Image(
+                                  image: NetworkImage(
+                                      widget.data['Auther']['avatar']),
+                                ),
+                              ),
+                              title: Row(
+                                children: [
+                                  Text(widget.data['Auther']['firstName']),
+                                  SizedBox(
+                                    width: 3,
+                                  ),
+                                  Text(widget.data['Auther']['lastName']),
+                                ],
+                              ),
+                              subtitle: Text(
+                                widget.data['Auther']['jobTitle'],
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.6)),
+                              ),
                             ),
-                            Text(widget.data['Auther']['lastName']),
-                          ],
-                        ),
-                        subtitle: Text(
-                          widget.data['Auther']['jobTitle'],
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.6)),
-                        ),
-                      ),
-                      PopupMenuButton<String>(
-                        onSelected: handleClick,
-                        itemBuilder: (BuildContext context) {
-                          return {'Edit', 'Delete'}.map((String choice) {
-                            return PopupMenuItem<String>(
-                              value: choice,
-                              child: Text(choice),
-                            );
-                          }).toList();
-                        },
+                          ),
+                          PopupMenuButton<String>(
+                            onSelected: handleClick,
+                            itemBuilder: (BuildContext context) {
+                              return {'Edit', 'Delete'}.map((String choice) {
+                                return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: Text(choice),
+                                );
+                              }).toList();
+                            },
+                          ),
+                        ],
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
@@ -209,7 +328,7 @@ class _GroupCardState extends State<GroupCard> {
                       Column(
                           children: snapshot.data.docs
                               .map(
-                                (e) => Comments(e.id, e.data()),
+                                (e) => Comments(e.id, widget.id, e.data()),
                               )
                               .toList()),
                       if (snapshot.data.docs.length > 3)

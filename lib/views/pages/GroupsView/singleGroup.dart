@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupCard.dart';
+import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupUsers.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:provider/provider.dart';
 
 class SingleGroup extends StatefulWidget {
   final String id;
@@ -17,29 +20,32 @@ class _SingleGroupState extends State<SingleGroup> {
   final _formKey = GlobalKey<FormState>();
   final controlPostBody = TextEditingController();
 
-  CollectionReference post = FirebaseFirestore.instance.collection('PostGroup');
-  Future writePost(String body) async {
-    return await post.add({
-      'Body': body,
-      'GroupId': widget.id,
-      'Likes': [],
-      'PostedDate': DateTime.now(),
-      'postImg': [],
-      'Auther': {
-        'id': '7Kxxu7T1AZYTDlbrzOH2Cun5uJm2',
-        'firstName': 'Mohamed',
-        'lastName': 'Farghal',
-        'jobTitle': 'MEAN Stack Developer',
-        'avatar':
-            'https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/UsersProfileImages%2Ffiver_g6.y02txtt?alt=media&token=92c5c725-c4d1-49da-bc9f-949010cb5586'
-      }
-    });
-  }
-
   var last;
   var len;
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthServices>(context);
+    final userDetails = authServices.storage.getItem('userDetails');
+    final uid = AuthServices.userID;
+    CollectionReference post =
+        FirebaseFirestore.instance.collection('PostGroup');
+    Future writePost(String body) async {
+      return await post.add({
+        'Body': body,
+        'GroupId': widget.id,
+        'Likes': [],
+        'PostedDate': DateTime.now(),
+        'postImg': [],
+        'Auther': {
+          'id': uid,
+          'firstName': userDetails['firstName'],
+          'lastName': userDetails['lastName'],
+          'jobTitle': userDetails['jobTitle'],
+          'avatar': userDetails['avatar'],
+        }
+      });
+    }
+
     Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
         .collection('PostGroup')
         .orderBy('PostedDate', descending: true)
@@ -80,11 +86,21 @@ class _SingleGroupState extends State<SingleGroup> {
             print(last);
           }
 
-          print(last);
           return Scaffold(
             appBar: AppBar(
               title: Text(widget.data['Name']),
               backgroundColor: HexColor("801818"),
+              actions: [
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => GroupUsers(widget.id))),
+                      child: Icon(Icons.supervised_user_circle_outlined)),
+                )
+              ],
             ),
             backgroundColor: Colors.brown[50],
             body: SingleChildScrollView(
