@@ -11,9 +11,11 @@ class AuthServices with ChangeNotifier {
   bool get isLoading => _isLoading;
   String get errorMessage => _errorMessage;
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  // static final LocalStorage store = new LocalStorage('ITI');
   static var userID;
 
   var userDetails;
+
   final LocalStorage storage = new LocalStorage('iti');
   Future Login(String email, String password) async {
     setLoading(true);
@@ -67,7 +69,8 @@ class AuthServices with ChangeNotifier {
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        storage.setItem('clickedDetails', documentSnapshot.data());
+        await storage.setItem('clickedDetails', "");
+        await storage.setItem('clickedDetails', documentSnapshot.data());
       } else {
         print('Document does not exist on the database');
       }
