@@ -20,9 +20,7 @@ class _RequestedGroupsState extends State<RequestedGroups> {
             onTap: () {
               // belal.logout();
               // var s = AuthServices.store.getItem('uid');
-              // print(s);
               var s = AuthServices.userID;
-              print(s);
             },
           ),
         ],

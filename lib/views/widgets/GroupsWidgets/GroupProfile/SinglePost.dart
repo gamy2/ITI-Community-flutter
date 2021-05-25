@@ -265,18 +265,19 @@ class _SinglePostState extends State<SinglePost> {
                                     ),
                                   ),
                                 ),
-                                PopupMenuButton<String>(
-                                  onSelected: handleClick,
-                                  itemBuilder: (BuildContext context) {
-                                    return {'Edit', 'Delete'}
-                                        .map((String choice) {
-                                      return PopupMenuItem<String>(
-                                        value: choice,
-                                        child: Text(choice),
-                                      );
-                                    }).toList();
-                                  },
-                                ),
+                                if (userid == widget.data['Auther']['id'])
+                                  PopupMenuButton<String>(
+                                    onSelected: handleClick,
+                                    itemBuilder: (BuildContext context) {
+                                      return {'Edit', 'Delete'}
+                                          .map((String choice) {
+                                        return PopupMenuItem<String>(
+                                          value: choice,
+                                          child: Text(choice),
+                                        );
+                                      }).toList();
+                                    },
+                                  ),
                               ],
                             ),
                             Padding(

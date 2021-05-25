@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupCard.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupUsers.dart';
@@ -72,8 +73,7 @@ class _SingleGroupState extends State<SingleGroup> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Spinner();
           }
-
-          last = snapshot.data.docs[snapshot.data.docs.length - 1];
+          // last = snapshot.data.docs[snapshot.data.docs.length - 1];
           // last = snapshot.data.docs.map((e) => e.id);
           void showMore() {
             _fb2 = FirebaseFirestore.instance
@@ -82,8 +82,6 @@ class _SingleGroupState extends State<SingleGroup> {
                 // .limit(1)
                 .orderBy('PostedDate', descending: true)
                 .startAfter([last]).snapshots();
-            print(_fb2);
-            print(last);
           }
 
           return Scaffold(
@@ -311,11 +309,11 @@ class _SingleGroupState extends State<SingleGroup> {
                               (e) => GroupCard(e.id, e.data()),
                             )
                             .toList()),
-                    InkWell(
-                        onTap: () {
-                          showMore();
-                        },
-                        child: Text('Show More'))
+                    // InkWell(
+                    //     onTap: () {
+                    //       showMore();
+                    //     },
+                    //     child: Text('Show More'))
                   ],
                 ),
               ),

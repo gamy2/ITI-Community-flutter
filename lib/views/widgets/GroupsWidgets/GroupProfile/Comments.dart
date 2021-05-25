@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 
 class Comments extends StatefulWidget {
@@ -137,6 +138,7 @@ class _CommentsState extends State<Comments> {
       }
     }
 
+    final userid = AuthServices.userID;
     return Column(children: [
       Card(
         color: Colors.grey[350],
@@ -197,17 +199,18 @@ class _CommentsState extends State<Comments> {
                           EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
                     ),
                   ),
-                  PopupMenuButton<String>(
-                    onSelected: handleClick,
-                    itemBuilder: (BuildContext context) {
-                      return {'Edit', 'Delete'}.map((String choice) {
-                        return PopupMenuItem<String>(
-                          value: choice,
-                          child: Text(choice),
-                        );
-                      }).toList();
-                    },
-                  ),
+                  if (userid == widget.data['User']['id'])
+                    PopupMenuButton<String>(
+                      onSelected: handleClick,
+                      itemBuilder: (BuildContext context) {
+                        return {'Edit', 'Delete'}.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
+                    ),
                 ],
               ),
               Padding(
