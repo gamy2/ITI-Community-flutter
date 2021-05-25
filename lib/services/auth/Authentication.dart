@@ -16,24 +16,25 @@ class AuthServices with ChangeNotifier {
 
   var userDetails;
 
-  final LocalStorage storage = new LocalStorage('iti');
+  final LocalStorage storage = new LocalStorage('iiTi');
   Future Login(String email, String password) async {
     setLoading(true);
     try {
       UserCredential authResult = await firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-
+      storage.setItem("uid", authResult.user.uid);
       FirebaseFirestore.instance
           .collection('users-details')
           .doc(authResult.user.uid)
           .get()
-          .then((DocumentSnapshot documentSnapshot) {
+          .then((DocumentSnapshot documentSnapshot) async {
         if (documentSnapshot.exists) {
-          storage.setItem('userDetails', documentSnapshot.data());
+          await storage.setItem('userDetails', documentSnapshot.data());
           userDetails = documentSnapshot.data();
           User user = authResult.user;
+          userID = user.uid;
           // store.setItem('uid', user.uid);
-          storage.setItem("uid", user.uid);
+
           setLoading(false);
         } else {
           print('Document does not exist on the database');
@@ -63,16 +64,18 @@ class AuthServices with ChangeNotifier {
   }
 
   Future getDataById(id) async {
+    // print(id);
+    // await storage.deleteItem('clickedDetails');
     FirebaseFirestore.instance
         .collection('users-details')
         .doc(id)
         .get()
         .then((DocumentSnapshot documentSnapshot) async {
       if (documentSnapshot.exists) {
-        await storage.setItem('clickedDetails', "");
+        // await storage.setItem('clickedDetails', "");
         await storage.setItem('clickedDetails', documentSnapshot.data());
       } else {
-        print('Document does not exist on the database');
+        print('2');
       }
     });
   }

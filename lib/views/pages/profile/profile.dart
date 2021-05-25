@@ -32,22 +32,22 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    super.initState();
     getdata();
+    super.initState();
   }
 
+// @override
+//   void dispose() {
+//     _emailController.dispose();
+//     _passwordController.dispose();
+//     super.dispose();
+//   }
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
 
     authServices.getDataById(widget.clickedID);
     var userDetails = authServices.storage.getItem("clickedDetails");
-    getdata() {
-      Timer.periodic(new Duration(seconds: 1), (timer) {
-        isLoaded = true;
-        setState(() {});
-      });
-    }
 
     // Timer.periodic(new Duration(seconds: 1), (timer) {
     //   if (userDetails == null) {
@@ -94,7 +94,6 @@ class _ProfileState extends State<Profile> {
                               InkWell(
                                   child: Icon(Icons.arrow_back),
                                   onTap: () {
-                                    dispose();
                                     Navigator.pop(context);
                                   }),
                               InkWell(
@@ -117,7 +116,6 @@ class _ProfileState extends State<Profile> {
                                           ? Icons.settings
                                           : Icons.edit),
                                   onTap: () {
-                                    dispose();
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(

@@ -39,9 +39,9 @@ class _YourGroupsState extends State<YourGroups> {
                             builder: (context) =>
                                 SingleGroup(docs.id, docs.data())));
                   },
-                  leading: Image.network(docs.data()['Img']),
+                  leading: Image.network((docs.data() as Map)['Img']),
                   title: InkWell(
-                    child: new Text(docs.data()['Name']),
+                    child: new Text((docs.data() as Map)['Name']),
                   ),
                 ),
               );

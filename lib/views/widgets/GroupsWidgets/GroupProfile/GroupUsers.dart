@@ -60,7 +60,7 @@ class _GroupUsersState extends State<GroupUsers> {
           ),
           body: new ListView(
             children: snapshot.data.docs.map((DocumentSnapshot docs) {
-              if (docs.data()['Role'] == 1) admins.add(docs.id);
+              if ((docs.data() as Map)['Role'] == 1) admins.add(docs.id);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
@@ -74,17 +74,17 @@ class _GroupUsersState extends State<GroupUsers> {
                                   builder: (context) => Profile(docs.id)));
                         },
                         leading: Image.network(
-                          docs.data()['avatar'],
+                          (docs.data() as Map)['avatar'],
                           width: 60,
                         ),
                         title: InkWell(
                           child: Wrap(
                             alignment: WrapAlignment.start,
                             children: [
-                              Text(docs.data()['firstName']),
+                              Text((docs.data() as Map)['firstName']),
                               SizedBox(width: 3),
-                              Text(docs.data()['lastName']),
-                              if (docs.data()['Role'] == 2)
+                              Text((docs.data() as Map)['lastName']),
+                              if ((docs.data() as Map)['Role'] == 2)
                                 Row(
                                   children: [
                                     SizedBox(
@@ -103,7 +103,7 @@ class _GroupUsersState extends State<GroupUsers> {
                                     ),
                                   ],
                                 ),
-                              if (docs.data()['Role'] == 1)
+                              if ((docs.data() as Map)['Role'] == 1)
                                 Row(
                                   children: [
                                     SizedBox(
@@ -122,7 +122,7 @@ class _GroupUsersState extends State<GroupUsers> {
                                     ),
                                   ],
                                 ),
-                              if (docs.data()['Role'] == 0)
+                              if ((docs.data() as Map)['Role'] == 0)
                                 Row(
                                   children: [
                                     SizedBox(
