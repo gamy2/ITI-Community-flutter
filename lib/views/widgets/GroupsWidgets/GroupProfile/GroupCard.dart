@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/Comments.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/SinglePost.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
 
 class GroupCard extends StatefulWidget {
   final String id;
@@ -18,7 +20,9 @@ class _GroupCardState extends State<GroupCard> {
   @override
   Widget build(BuildContext context) {
     List<dynamic> likes = <dynamic>[];
-    var userid = AuthServices.userID;
+    final authServices = Provider.of<AuthServices>(context);
+    final userid = authServices.storage.getItem('uid');
+
     var a = widget.data['Likes'].contains(userid);
     final _formKey = GlobalKey<FormState>();
     final controlPostBody = TextEditingController();
@@ -189,7 +193,6 @@ class _GroupCardState extends State<GroupCard> {
             return !isLiked;
           }
 
-          print(userid);
           return Column(
             children: [
               Container(
@@ -211,14 +214,23 @@ class _GroupCardState extends State<GroupCard> {
                                       widget.data['Auther']['avatar']),
                                 ),
                               ),
-                              title: Row(
-                                children: [
-                                  Text(widget.data['Auther']['firstName']),
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(widget.data['Auther']['lastName']),
-                                ],
+                              title: InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Profile(
+                                              widget.data['Auther']['id'])));
+                                },
+                                child: Row(
+                                  children: [
+                                    Text(widget.data['Auther']['firstName']),
+                                    SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(widget.data['Auther']['lastName']),
+                                  ],
+                                ),
                               ),
                               subtitle: Text(
                                 widget.data['Auther']['jobTitle'],
@@ -245,8 +257,9 @@ class _GroupCardState extends State<GroupCard> {
                         padding: const EdgeInsets.all(16.0),
                         child: Text(
                           widget.data['Body'],
-                          style:
-                              TextStyle(color: Colors.black.withOpacity(0.6)),
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.6),
+                              fontSize: 15),
                         ),
                       ),
                       Wrap(

@@ -6,6 +6,7 @@ import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:provider/provider.dart';
 
 class GroupUsers extends StatefulWidget {
   final String id;
@@ -18,7 +19,8 @@ class GroupUsers extends StatefulWidget {
 class _GroupUsersState extends State<GroupUsers> {
   @override
   Widget build(BuildContext context) {
-    var uid = AuthServices.userID;
+    final authServices = Provider.of<AuthServices>(context);
+    final uid = authServices.storage.getItem('uid');
     var admins = [];
 
     final Stream<QuerySnapshot> _fb = FirebaseFirestore.instance

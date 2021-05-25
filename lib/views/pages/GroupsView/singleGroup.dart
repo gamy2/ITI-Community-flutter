@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupCard.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupUsers.dart';
@@ -303,12 +302,27 @@ class _SingleGroupState extends State<SingleGroup> {
                         ),
                       ),
                     ),
+                    if (snapshot.data.docs.isEmpty)
+                      Column(
+                        children: [
+                          Text(
+                            'No Posts Yet',
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontStyle: FontStyle.italic,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[400]),
+                          ),
+                        ],
+                      ),
+
                     Column(
                         children: snapshot.data.docs
                             .map(
                               (e) => GroupCard(e.id, e.data()),
                             )
                             .toList()),
+
                     // InkWell(
                     //     onTap: () {
                     //       showMore();
