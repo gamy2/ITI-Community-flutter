@@ -46,6 +46,15 @@ class _SinglePostState extends State<SinglePost> {
       });
     }
 
+    void handleClick(String value) {
+      switch (value) {
+        case 'Logout':
+          break;
+        case 'Settings':
+          break;
+      }
+    }
+
     List<dynamic> likes = <dynamic>[];
     var userid = AuthServices.userID;
     var a = widget.data['Likes'].contains(userid);
@@ -369,6 +378,17 @@ class _SinglePostState extends State<SinglePost> {
                           ],
                         ),
                       ),
+                    ),
+                    PopupMenuButton<String>(
+                      onSelected: handleClick,
+                      itemBuilder: (BuildContext context) {
+                        return {'Logout', 'Settings'}.map((String choice) {
+                          return PopupMenuItem<String>(
+                            value: choice,
+                            child: Text(choice),
+                          );
+                        }).toList();
+                      },
                     ),
                   ],
                 ),

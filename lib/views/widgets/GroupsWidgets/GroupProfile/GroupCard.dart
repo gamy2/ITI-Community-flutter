@@ -20,6 +20,17 @@ class _GroupCardState extends State<GroupCard> {
     var userid = AuthServices.userID;
     var a = widget.data['Likes'].contains(userid);
 
+    void handleClick(String value) {
+      switch (value) {
+        case 'Edit':
+          print('Edit');
+          break;
+        case 'Delete':
+          print('Delete');
+          break;
+      }
+    }
+
     final Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
         .collection('PostGroup')
         .doc(widget.id)
@@ -97,6 +108,17 @@ class _GroupCardState extends State<GroupCard> {
                           style:
                               TextStyle(color: Colors.black.withOpacity(0.6)),
                         ),
+                      ),
+                      PopupMenuButton<String>(
+                        onSelected: handleClick,
+                        itemBuilder: (BuildContext context) {
+                          return {'Edit', 'Delete'}.map((String choice) {
+                            return PopupMenuItem<String>(
+                              value: choice,
+                              child: Text(choice),
+                            );
+                          }).toList();
+                        },
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
