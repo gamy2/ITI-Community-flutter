@@ -30,6 +30,21 @@ class GroupService {
         .delete();
   }
 
+  static addUser(gid, uid, data) {
+    FirebaseFirestore.instance
+        .collection('Groups2')
+        .doc(gid)
+        .collection('Users')
+        .doc(uid)
+        .set({
+      'Role': 0,
+      'firstName': data['firstName'],
+      'lastName': data['lastName'],
+      'jobTitle': data['jobTitle'],
+      'avatar': data['avatar'],
+    });
+  }
+
   static deleteUser(gid, uid) async {
     FirebaseFirestore.instance
         .collection('Groups2')
@@ -47,30 +62,4 @@ class GroupService {
         .doc(uid)
         .update({'Role': role});
   }
-
-  // static getAllGroups() async {
-  //   Stream<QuerySnapshot> _fb;
-  //   Stream<QuerySnapshot> _fbToReturn;
-  //   await FirebaseFirestore.instance
-  //       .collection('Groups2')
-  //       .get()
-  //       .then((value) => {
-  //             for (var i in value.docs)
-  //               {
-  //                 _fb = FirebaseFirestore.instance
-  //                     .collection('Groups2')
-  //                     .doc(i.id)
-  //                     .collection('Users')
-  //                     .where('Role', isGreaterThan: 0)
-  //                     .snapshots()
-  //                     .forEach((element) {
-  //                   for (var u in element.docs) {
-  //                     print(u.id);
-  //                     print(i.id);
-  //                   }
-  //                 }) as Stream<QuerySnapshot>
-  //               }
-  //           });
-  //   return _fbToReturn;
-  // }
 }

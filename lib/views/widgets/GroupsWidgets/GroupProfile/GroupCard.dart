@@ -11,7 +11,9 @@ import 'package:provider/provider.dart';
 class GroupCard extends StatefulWidget {
   final String id;
   final data;
-  GroupCard(this.id, this.data);
+  final user;
+  final uRole;
+  GroupCard(this.id, this.data, this.uRole, this.user);
   @override
   _GroupCardState createState() => _GroupCardState();
 }
@@ -239,7 +241,8 @@ class _GroupCardState extends State<GroupCard> {
                               ),
                             ),
                           ),
-                          if (userid == widget.data['Auther']['id'])
+                          if (userid == widget.data['Auther']['id'] ||
+                              widget.user['Role'] == 1)
                             PopupMenuButton<String>(
                               onSelected: handleClick,
                               itemBuilder: (BuildContext context) {
@@ -323,8 +326,11 @@ class _GroupCardState extends State<GroupCard> {
                               onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          SinglePost(widget.id, widget.data))),
+                                      builder: (context) => SinglePost(
+                                          widget.id,
+                                          widget.data,
+                                          widget.uRole,
+                                          widget.user))),
                               child: Row(
                                 children: [
                                   Icon(Icons.mode_comment_outlined),
@@ -343,7 +349,8 @@ class _GroupCardState extends State<GroupCard> {
                       Column(
                           children: snapshot.data.docs
                               .map(
-                                (e) => Comments(e.id, widget.id, e.data()),
+                                (e) => Comments(e.id, widget.id, e.data(),
+                                    widget.uRole, widget.user),
                               )
                               .toList()),
                       if (snapshot.data.docs.length > 3)
@@ -353,8 +360,11 @@ class _GroupCardState extends State<GroupCard> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        SinglePost(widget.id, widget.data))),
+                                    builder: (context) => SinglePost(
+                                        widget.id,
+                                        widget.data,
+                                        widget.uRole,
+                                        widget.user))),
                             child: Text(
                               'Load More Comments',
                               style: TextStyle(color: Colors.blue[300]),
@@ -368,8 +378,11 @@ class _GroupCardState extends State<GroupCard> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        SinglePost(widget.id, widget.data))),
+                                    builder: (context) => SinglePost(
+                                        widget.id,
+                                        widget.data,
+                                        widget.uRole,
+                                        widget.user))),
                             child: Text(
                               'Be First One Comment',
                               style: TextStyle(color: Colors.blue[300]),

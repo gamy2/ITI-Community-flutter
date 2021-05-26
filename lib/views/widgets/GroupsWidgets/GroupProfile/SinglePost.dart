@@ -12,7 +12,9 @@ import 'package:provider/provider.dart';
 class SinglePost extends StatefulWidget {
   final String id;
   final data;
-  SinglePost(this.id, this.data);
+  final user;
+  final uRole;
+  SinglePost(this.id, this.data, this.uRole, this.user);
 
   @override
   _SinglePostState createState() => _SinglePostState();
@@ -277,7 +279,8 @@ class _SinglePostState extends State<SinglePost> {
                                     ),
                                   ),
                                 ),
-                                if (userid == widget.data['Auther']['id'])
+                                if (userid == widget.data['Auther']['id'] ||
+                                    widget.user['Role'] == 1)
                                   PopupMenuButton<String>(
                                     onSelected: handleClick,
                                     itemBuilder: (BuildContext context) {
@@ -514,8 +517,8 @@ class _SinglePostState extends State<SinglePost> {
                             Column(
                                 children: snapshot.data.docs
                                     .map(
-                                      (e) =>
-                                          Comments(e.id, widget.id, e.data()),
+                                      (e) => Comments(e.id, widget.id, e.data(),
+                                          widget.uRole, widget.user),
                                     )
                                     .toList()),
                             if (snapshot.data.docs.length == 0)
