@@ -142,7 +142,7 @@ class _ProfileState extends State<Profile> {
                 SizedBox(
                   height: 20,
                 ),
-                profileExp(userDetails['experiences'])
+                profileExp(userDetails['experiences'], widget.clickedID)
               ],
             ),
           )),

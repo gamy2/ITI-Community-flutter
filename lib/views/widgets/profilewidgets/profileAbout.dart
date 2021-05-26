@@ -28,10 +28,10 @@ class _profileAboutState extends State<profileAbout> {
                   color: Colors.grey[700]),
             ),
           ),
-          SizedBox(
-            height: 20,
-          ),
-          Text(widget.about)
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(widget.about),
+          )
         ],
       ),
     );
