@@ -10,6 +10,9 @@ class profileAbout extends StatefulWidget {
 }
 
 class _profileAboutState extends State<profileAbout> {
+  var img =
+      "https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/112-1120219_goal-clipart-know-yourself-myself-clipart.png?alt=media&token=d29ee586-8544-4ee5-a531-1c5a7f96285a";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,10 +31,29 @@ class _profileAboutState extends State<profileAbout> {
                   color: Colors.grey[700]),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text(widget.about),
-          )
+          widget.about.length == 0
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      width: 1,
+                    ),
+                    Column(children: [
+                      Text("SORRY , This Account Has No About"),
+                      Container(
+                        child: Image.network(img),
+                        width: 300,
+                      )
+                    ]),
+                    SizedBox(
+                      width: 1,
+                    ),
+                  ],
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Text(widget.about),
+                )
         ],
       ),
     );
