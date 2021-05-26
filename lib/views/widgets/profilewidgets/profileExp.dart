@@ -3,7 +3,9 @@ import 'package:iti_community_flutter/services/auth/Authentication.dart';
 
 class profileExp extends StatefulWidget {
   profileExp(this.experiences, this.uid);
+
   final List experiences;
+
   final uid;
   @override
   _profileExpState createState() => _profileExpState();
@@ -33,6 +35,7 @@ class _profileExpState extends State<profileExp> {
               ),
             ),
           ]),
+
           widget.experiences.length == 0
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,6 +60,7 @@ class _profileExpState extends State<profileExp> {
                       .map((e) => Text(e.toString()))
                       .toList(),
                 ),
+
           Row(children: <Widget>[
             Expanded(child: Divider()),
             Expanded(child: Divider()),

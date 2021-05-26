@@ -31,6 +31,7 @@ class _profileAboutState extends State<profileAbout> {
                   color: Colors.grey[700]),
             ),
           ),
+
           widget.about.length == 0
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,6 +55,7 @@ class _profileAboutState extends State<profileAbout> {
                   padding: const EdgeInsets.all(15.0),
                   child: Text(widget.about),
                 )
+
         ],
       ),
     );

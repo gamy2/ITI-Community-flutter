@@ -108,6 +108,7 @@ class _ProfileState extends State<Profile> {
                                         fontSize: 20),
                                   )),
                                   onTap: () {
+
                                     print(userDetails);
                                   },
                                 ),
@@ -148,6 +149,7 @@ class _ProfileState extends State<Profile> {
               ),
             )),
           ),
+
         ),
       );
     }
