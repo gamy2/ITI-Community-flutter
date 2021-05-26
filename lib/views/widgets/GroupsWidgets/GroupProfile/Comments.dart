@@ -8,7 +8,9 @@ class Comments extends StatefulWidget {
   final String id;
   final data;
   final String pID;
-  Comments(this.id, this.pID, this.data);
+  final user;
+  final uRole;
+  Comments(this.id, this.pID, this.data, this.uRole, this.user);
   @override
   _CommentsState createState() => _CommentsState();
 }
@@ -204,7 +206,8 @@ class _CommentsState extends State<Comments> {
                           EdgeInsets.symmetric(horizontal: 0.0, vertical: 0.0),
                     ),
                   ),
-                  if (userid == widget.data['User']['id'])
+                  if (userid == widget.data['User']['id'] ||
+                      widget.user['Role'] == 1)
                     PopupMenuButton<String>(
                       onSelected: handleClick,
                       itemBuilder: (BuildContext context) {

@@ -10,7 +10,9 @@ import 'package:provider/provider.dart';
 class SingleGroup extends StatefulWidget {
   final String id;
   final data;
-  SingleGroup(this.id, this.data);
+  final user;
+  final uRole;
+  SingleGroup(this.id, this.data, this.uRole, this.user);
   @override
   _SingleGroupState createState() => _SingleGroupState();
 }
@@ -165,143 +167,148 @@ class _SingleGroupState extends State<SingleGroup> {
                         ],
                       ),
                     ),
-                    Center(
-                      child: InkWell(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  insetPadding: EdgeInsets.zero,
-                                  content: Stack(
-                                    children: <Widget>[
-                                      Positioned(
-                                        // right: -40.0,
-                                        top: -40.0,
-                                        child: InkResponse(
-                                          onTap: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: CircleAvatar(
-                                            child: Icon(Icons.close),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 280,
-                                        child: SingleChildScrollView(
-                                          child: Form(
-                                            key: _formKey,
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding: EdgeInsets.all(8.0),
-                                                  child: Container(
-                                                    height: 200,
-                                                    child: TextFormField(
-                                                      maxLines: null,
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .multiline,
-                                                      decoration: InputDecoration
-                                                          .collapsed(
-                                                              hintText:
-                                                                  'What Do You Thinking About?!..'),
-                                                      // ignore: missing_return
-                                                      validator: (value) {
-                                                        value.isEmpty;
-                                                        // ignore: unnecessary_statements
-                                                        value.length > 3;
-                                                      },
-                                                      controller:
-                                                          controlPostBody,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.all(8.0),
-                                                  child: Material(
-                                                    color: Colors.blue[400],
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                5.0)),
-                                                    child: InkWell(
-                                                      highlightColor:
-                                                          Colors.blue[100],
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(Icons.edit),
-                                                            Text(
-                                                              "Post",
-                                                              style: TextStyle(
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      onTap: () {
-                                                        final String body =
-                                                            controlPostBody
-                                                                .text;
-                                                        if (body != null ||
-                                                            body.length > 3) {
-                                                          writePost(body);
-                                                          Navigator.of(context)
-                                                              .pop();
-                                                        }
-                                                      },
-                                                    ),
-                                                  ),
-                                                )
-                                              ],
+                    if (widget.uRole == uid && widget.user['Role'] > 0)
+                      Center(
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    insetPadding: EdgeInsets.zero,
+                                    content: Stack(
+                                      children: <Widget>[
+                                        Positioned(
+                                          // right: -40.0,
+                                          top: -40.0,
+                                          child: InkResponse(
+                                            onTap: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                            child: CircleAvatar(
+                                              child: Icon(Icons.close),
+                                              backgroundColor: Colors.red,
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              });
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border(
-                              top:
-                                  BorderSide(width: 1.0, color: Colors.black54),
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
+                                        Container(
+                                          width: double.infinity,
+                                          height: 280,
+                                          child: SingleChildScrollView(
+                                            child: Form(
+                                              key: _formKey,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Container(
+                                                      height: 200,
+                                                      child: TextFormField(
+                                                        maxLines: null,
+                                                        keyboardType:
+                                                            TextInputType
+                                                                .multiline,
+                                                        decoration: InputDecoration
+                                                            .collapsed(
+                                                                hintText:
+                                                                    'What Do You Thinking About?!..'),
+                                                        // ignore: missing_return
+                                                        validator: (value) {
+                                                          value.isEmpty;
+                                                          // ignore: unnecessary_statements
+                                                          value.length > 3;
+                                                        },
+                                                        controller:
+                                                            controlPostBody,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: Material(
+                                                      color: Colors.blue[400],
+                                                      borderRadius:
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  5.0)),
+                                                      child: InkWell(
+                                                        highlightColor:
+                                                            Colors.blue[100],
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(8.0),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Icon(Icons.edit),
+                                                              Text(
+                                                                "Post",
+                                                                style: TextStyle(
+                                                                    fontSize:
+                                                                        15,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        onTap: () {
+                                                          final String body =
+                                                              controlPostBody
+                                                                  .text;
+                                                          if (body != null ||
+                                                              body.length > 3) {
+                                                            writePost(body);
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          }
+                                                        },
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                });
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              border: Border(
+                                top: BorderSide(
+                                    width: 1.0, color: Colors.black54),
+                                bottom: BorderSide(
+                                    width: 1.0, color: Colors.black54),
+                              ),
                             ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.edit),
-                                Text('Write Post Here')
-                              ],
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.edit),
+                                  Text('Write Post Here')
+                                ],
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
                     if (snapshot.data.docs.isEmpty)
                       Column(
                         children: [
@@ -315,13 +322,14 @@ class _SingleGroupState extends State<SingleGroup> {
                           ),
                         ],
                       ),
-
-                    Column(
-                        children: snapshot.data.docs
-                            .map(
-                              (e) => GroupCard(e.id, e.data()),
-                            )
-                            .toList()),
+                    if (widget.uRole == uid && widget.user['Role'] > 0)
+                      Column(
+                          children: snapshot.data.docs
+                              .map(
+                                (e) => GroupCard(
+                                    e.id, e.data(), widget.uRole, widget.user),
+                              )
+                              .toList()),
 
                     // InkWell(
                     //     onTap: () {
