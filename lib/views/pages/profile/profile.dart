@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
   getdata() {
     Timer.periodic(new Duration(seconds: 1), (timer) {
       isLoaded = true;
-      setState(() {});
+      if (this.mounted) setState(() {});
     });
   }
 
@@ -108,7 +108,6 @@ class _ProfileState extends State<Profile> {
                                         fontSize: 20),
                                   )),
                                   onTap: () {
-
                                     print(userDetails);
                                   },
                                 ),
@@ -149,7 +148,6 @@ class _ProfileState extends State<Profile> {
               ),
             )),
           ),
-
         ),
       );
     }

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:iti_community_flutter/views/widgets/profilewidgets/profileExpCard.dart';
 
 class profileExp extends StatefulWidget {
   profileExp(this.experiences, this.uid);
 
-  final List experiences;
+  List experiences;
 
   final uid;
   @override
@@ -13,7 +14,7 @@ class profileExp extends StatefulWidget {
 
 class _profileExpState extends State<profileExp> {
   var img =
-      "https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/112-1120219_goal-clipart-know-yourself-myself-clipart.png?alt=media&token=d29ee586-8544-4ee5-a531-1c5a7f96285a";
+      "https://firebasestorage.googleapis.com/v0/b/iti-community.appspot.com/o/221-2211998_contract-clipart-hired-experience-vector.png?alt=media&token=46043915-0b7e-4c7b-88e2-afbbf0a91742";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,9 +36,60 @@ class _profileExpState extends State<profileExp> {
               ),
             ),
           ]),
-
-          widget.experiences.length == 0
-              ? Row(
+          (widget.experiences.length != 0
+              ? Column(
+                  children: widget.experiences
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: double.infinity,
+                              child: Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        (e['companyName'] != null
+                                            ? e['companyName']
+                                            : " "),
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text("Location : " +
+                                              (e['location'] != null
+                                                  ? e['location']
+                                                  : " ")),
+                                          Text("from : " +
+                                              (e['from'] != null
+                                                  ? e['from']
+                                                  : "") +
+                                              " " +
+                                              "to:" +
+                                              (e['to'] != null
+                                                  ? e['to']
+                                                  : "now")),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0, top: 5),
+                                            child: Text('description' +
+                                                (e['description'] != null
+                                                    ? e['description']
+                                                    : " ")),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                )
+              : Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
@@ -54,13 +106,7 @@ class _profileExpState extends State<profileExp> {
                       width: 1,
                     ),
                   ],
-                )
-              : Column(
-                  children: widget.experiences
-                      .map((e) => Text(e.toString()))
-                      .toList(),
-                ),
-
+                )),
           Row(children: <Widget>[
             Expanded(child: Divider()),
             Expanded(child: Divider()),
@@ -90,7 +136,7 @@ class _profileExpState extends State<profileExp> {
                     ),
                   ],
                 )
-              : null
+              : Text("")
         ],
       ),
     );
