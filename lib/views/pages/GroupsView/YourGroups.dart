@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/services/GroupsService.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/singleGroup.dart';
 import 'package:iti_community_flutter/views/widgets/Spinner.dart';
+import 'package:provider/provider.dart';
 
 class YourGroups extends StatefulWidget {
   @override
@@ -9,12 +12,12 @@ class YourGroups extends StatefulWidget {
 }
 
 class _YourGroupsState extends State<YourGroups> {
-  var allGroups;
-  @override
   final Stream<QuerySnapshot> _fb =
       FirebaseFirestore.instance.collection('Groups2').snapshots();
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthServices>(context);
+    final userid = authServices.storage.getItem('uid');
     // GroupService.getAllGroups();
     return StreamBuilder<QuerySnapshot>(
       stream: _fb,
@@ -25,25 +28,74 @@ class _YourGroupsState extends State<YourGroups> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Spinner();
         }
+        if (snapshot.data.docs == null) return Spinner();
 
         return Scaffold(
           body: new ListView(
             children: snapshot.data.docs.map((DocumentSnapshot docs) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                SingleGroup(docs.id, docs.data())));
-                  },
-                  leading: Image.network((docs.data() as Map)['Img']),
-                  title: InkWell(
-                    child: new Text((docs.data() as Map)['Name']),
-                  ),
-                ),
+              Stream<QuerySnapshot> us = FirebaseFirestore.instance
+                  .collection('Groups2/${docs.id}/Users')
+                  .snapshots();
+              return StreamBuilder(
+                stream: us,
+                builder:
+                    (BuildContext context, AsyncSnapshot<QuerySnapshot> user) {
+                  if (user.hasError) {
+                    return Text('Something went wrong');
+                  }
+                  if (user.connectionState == ConnectionState.waiting) {
+                    return Center(child: Spinner());
+                  }
+                  if (!user.hasData) {
+                    return Center(child: Spinner());
+                  }
+                  if (user.data.docs == null) return Center(child: Spinner());
+
+                  return Column(
+                    children: [
+                      for (var i in user.data.docs)
+                        if (i.id == userid && (i.data() as Map)['Role'] > 0)
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: new ListTile(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SingleGroup(
+                                                  docs.id,
+                                                  docs.data(),
+                                                  i.id,
+                                                  (i.data() as Map))));
+                                    },
+                                    leading: Image.network(
+                                        (docs.data() as Map)['Img']),
+                                    title: InkWell(
+                                      child: new Text(
+                                          (docs.data() as Map)['Name']),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () =>
+                                      GroupService.deleteUser(docs.id, userid),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      Icons.exit_to_app,
+                                      color: Colors.red[300],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                    ],
+                  );
+                },
               );
             }).toList(),
           ),
@@ -52,139 +104,3 @@ class _YourGroupsState extends State<YourGroups> {
     );
   }
 }
-
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:flutter/material.dart';
-// import 'package:iti_community_flutter/services/auth/Authentication.dart';
-// import 'package:iti_community_flutter/views/pages/GroupsView/singleGroup.dart';
-// import 'package:iti_community_flutter/views/widgets/Spinner.dart';
-
-// class YourGroups extends StatefulWidget {
-//   @override
-//   _YourGroupsState createState() => _YourGroupsState();
-// }
-
-// class _YourGroupsState extends State<YourGroups> {
-//   @override
-//   final Future<QuerySnapshot> _fb = FirebaseFirestore.instance
-//       .collection('Groups2')
-//       .get()
-//       .then((DocumentSnapshot docs) => docs.data()));
-//   @override
-//   Widget build(BuildContext context) {
-//     var uid = AuthServices.userID;
-//     var member = [];
-//     var myGroups;
-//     final groups = [];
-//     print(_fb);
-//     return StreamBuilder<QuerySnapshot>(
-//       // stream: _fb,
-//       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//         if (snapshot.hasError) {
-//           return Text('Something went wrong');
-//         }
-//         if (snapshot.connectionState == ConnectionState.waiting) {
-//           return Spinner();
-//         }
-//         // for (var i in snapshot.data.docs) {
-//         //   groups.add(i);
-//         //   // snapshot.data.docs.forEach((element) async {
-//         //   FirebaseFirestore.instance
-//         //       .collection('Groups2')
-//         //       .doc(i.id)
-//         //       .collection('Users')
-//         //       .where('Role', isGreaterThan: 0)
-//         //       .get()
-//         //       .then((value) => value.docs.forEach((element) {
-//         //             member.add(element.id);
-//         //             // print(member);
-//         //           }));
-//         //   // });
-//         // }
-//         // for (var i in snapshot.data.docs) {
-//         //   snapshot.data.docs.forEach((element) async {
-//         //     FirebaseFirestore.instance
-//         //         .collection('Groups2')
-//         //         .doc(i.id)
-//         //         .collection('Users')
-//         //         // .doc(uid)
-//         //         .get()
-//         //         .then((value) {
-//         //       for (var z in value.docs) {
-//         //         if (z.data()['Role'] > 0) {
-//         //           // groups.add(i);
-//         //           // // print(groups);
-//         //           groups.add(i);
-//         //           for (var g in groups) {
-//         //             print(g.id);
-//         //           }
-//         //         }
-//         //       }
-//         //     });
-//         //   });
-//         // }
-//         // for (var i in snapshot.data.docs) {
-//         //   snapshot.data.docs.forEach((element) {
-//         //     FirebaseFirestore.instance
-//         //         .collection('Groups2')
-//         //         .doc(i.id)
-//         //         .collection('Users')
-//         //         .doc(uid)
-//         //         .get()
-//         //         .then((value) {
-//         //       if (value.data()['Role'] > 0) {
-//         //         // groups.add(i);
-//         //         // // print(groups);
-//         //         setState(() {
-//         //           groups.add({'id :${i.id}', 'data: ${i.data()}'});
-//         //         });
-//         //         myGroups = [...groups];
-//         //       }
-//         //     });
-//         //   });
-//         // }
-//         // print(myGroups);
-//         return Scaffold(
-//           body: new ListView(
-//             // children: groups.map((docs) {
-//             //   return Padding(
-//             //     padding: const EdgeInsets.all(8.0),
-//             //     child: new ListTile(
-//             //       onTap: () {
-//             //         Navigator.push(
-//             //             context,
-//             //             MaterialPageRoute(
-//             //                 builder: (context) =>
-//             //                     SingleGroup(docs.id, docs.data())));
-//             //       },
-//             //       leading: Image.network(docs.data()['Img']),
-//             //       title: InkWell(
-//             //         child: new Text(docs.data()['Name']),
-//             //       ),
-//             //     ),
-//             //   );
-//             // }).toList(),
-//             children: groups
-//                 .map((docs) => Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: new ListTile(
-//                         onTap: () {
-//                           Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                   builder: (context) =>
-//                                       SingleGroup(docs.id, docs.data())));
-//                         },
-//                         leading: Image.network(docs.data()['Img']),
-//                         title: InkWell(
-//                           child: new Text(docs.data()['Name']),
-//                         ),
-//                       ),
-//                     ))
-//                 .toList(),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
