@@ -48,13 +48,14 @@ class _ProfiledetailsState extends State<Profiledetails> {
             textAlign: TextAlign.left,
           ),
           SizedBox(
-            height: 30,
-          ),
-          Text(
-            widget.jTitel,
-            style:
-                TextStyle(fontWeight: FontWeight.bold, color: Colors.grey[600]),
-          )
+              height: 30,
+              child: Center(
+                child: Text(
+                  widget.jTitel,
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.grey[600]),
+                ),
+              )),
         ],
       ),
     );
