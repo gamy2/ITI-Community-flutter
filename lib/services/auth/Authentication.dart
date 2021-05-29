@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +16,7 @@ class AuthServices with ChangeNotifier {
   static var userID;
 
   var userDetails;
+  final _collectdata = StreamController();
 
   final LocalStorage storage = new LocalStorage('iiTi');
   Future Login(String email, String password) async {
@@ -31,11 +33,13 @@ class AuthServices with ChangeNotifier {
         if (documentSnapshot.exists) {
           await storage.setItem('userDetails', documentSnapshot.data());
           userDetails = documentSnapshot.data();
+          _collectdata.sink.add(userDetails);
           User user = authResult.user;
           userID = user.uid;
           // store.setItem('uid', user.uid);
 
           setLoading(false);
+          return user;
         } else {
           print('Document does not exist on the database');
         }
@@ -80,6 +84,21 @@ class AuthServices with ChangeNotifier {
     });
   }
 
+  // Future getdata(id) async {
+  //   FirebaseFirestore.instance
+  //       .collection('users-details')
+  //       .doc(id)
+  //       .get()
+  //       .then((DocumentSnapshot documentSnapshot) async {
+  //     if (documentSnapshot.exists) {
+  //       await storage.setItem('userDetails', documentSnapshot.data());
+  //       userDetails = await documentSnapshot.data();
+  //       return userDetails;
+  //     }
+  //   });
+  // }
+
   Stream<User> get user =>
       firebaseAuth.authStateChanges().map((event) => event);
+  Stream get stream => _collectdata.stream;
 }

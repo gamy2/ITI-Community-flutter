@@ -58,21 +58,27 @@ class _HomeState extends State<Home> {
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: 65,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: DecoratedBox(
-                                      child: Center(
-                                          child: Text("+",
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 20))),
-                                      decoration: BoxDecoration(
-                                        color: HexColor("e4e1e1"),
-                                        borderRadius: BorderRadius.circular(15),
-                                      )),
+                              InkWell(
+                                child: SizedBox(
+                                  width: 65,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: DecoratedBox(
+                                        child: Center(
+                                            child: Text("+",
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20))),
+                                        decoration: BoxDecoration(
+                                          color: HexColor("e4e1e1"),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                        )),
+                                  ),
                                 ),
+                                onTap: () {
+                                  print(authServices.user);
+                                },
                               ),
                               InkWell(
                                   child: Icon(Icons.settings),
