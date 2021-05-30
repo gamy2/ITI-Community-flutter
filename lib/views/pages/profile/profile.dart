@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
                                             builder: (context) =>
                                                 ((widget.clickedID !=
                                                         AuthServices.userID)
-                                                    ? Settings()
+                                                    ? settings()
                                                     : EditProfile()),
                                           ));
                                     })

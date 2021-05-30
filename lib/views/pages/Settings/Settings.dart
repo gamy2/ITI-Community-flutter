@@ -3,12 +3,12 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatefulWidget {
+class settings extends StatefulWidget {
   @override
-  _SettingsState createState() => _SettingsState();
+  _settingsState createState() => _settingsState();
 }
 
-class _SettingsState extends State<Settings> {
+class _settingsState extends State<settings> {
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);

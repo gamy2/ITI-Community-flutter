@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
       'Index 3: Test',
       style: optionStyle,
     ),
-    Settings()
+    settings()
   ];
   void _onItemTapped(int index) {
     setState(() {
