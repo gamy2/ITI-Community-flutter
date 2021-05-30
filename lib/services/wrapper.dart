@@ -12,7 +12,11 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     if (user != null) {
-      return HomePage();
+      return StreamBuilder<Object>(
+          stream: null,
+          builder: (context, snapshot) {
+            return HomePage();
+          });
     } else {
       return AuthLoginAndRegistration();
     }

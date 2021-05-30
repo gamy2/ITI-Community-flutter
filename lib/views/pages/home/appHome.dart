@@ -9,57 +9,73 @@ import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
+  Home(this.uid);
+  final uid;
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  bool isLoaded = false;
+  getdata() {
+    Timer.periodic(new Duration(seconds: 1), (timer) {
+      isLoaded = true;
+      if (this.mounted) setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    getdata();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
-    final userDetails = authServices.storage.getItem("userDetails");
+    authServices.getUserDetails(widget.uid);
+    final userDetails = authServices.storage.getItem('uDetails');
 
-    if (userDetails == null) {
+    if (widget.uid == null) {
       authServices.logout();
     }
-
-    return Scaffold(
-      body: Container(
-        color: HexColor("801818"),
-        child: SafeArea(
-          child: Container(
-            color: HexColor("e4e1e1"),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(
-                      height: 58,
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Profile(AuthServices.userID)));
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: CircleAvatar(
-                                    backgroundImage:
-                                        NetworkImage(userDetails["avatar"]),
-                                    radius: 30.0,
+    if (isLoaded) {
+      return Scaffold(
+        body: Container(
+          color: HexColor("801818"),
+          child: SafeArea(
+            child: Container(
+              color: HexColor("e4e1e1"),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                        height: 58,
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(color: Colors.white),
+                          child: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                Profile(AuthServices.userID)));
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: CircleAvatar(
+                                      backgroundImage:
+                                          NetworkImage(userDetails["avatar"]),
+                                      radius: 30.0,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              InkWell(
-                                child: SizedBox(
+                                SizedBox(
                                   width: 65,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
@@ -76,30 +92,46 @@ class _HomeState extends State<Home> {
                                         )),
                                   ),
                                 ),
-                                onTap: () {
-                                  print(authServices.user);
-                                },
-                              ),
-                              InkWell(
-                                  child: Icon(Icons.settings),
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => Settings(),
-                                        ));
-                                  })
-                            ],
+                                InkWell(
+                                    child: Icon(Icons.settings),
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Settings(),
+                                          ));
+                                    })
+                              ],
+                            ),
                           ),
-                        ),
-                      )),
-                  SizedBox()
-                ],
+                        )),
+                    SizedBox()
+                  ],
+                ),
               ),
             ),
           ),
         ),
-      ),
-    );
+      );
+    } else {
+      return new Container(
+          color: Colors.white,
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  child: CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(HexColor('801818')),
+                  ),
+                  height: 40.0,
+                  width: 40.0,
+                )
+              ],
+            ),
+          ));
+    }
   }
 }

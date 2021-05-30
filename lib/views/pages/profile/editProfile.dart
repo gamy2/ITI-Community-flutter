@@ -127,9 +127,9 @@ class _EditProfileState extends State<EditProfile> {
                               padding: const EdgeInsets.all(12.0),
                               child: TextFormField(
                                 controller: _about,
-                                validator: (val) => val.isNotEmpty
-                                    ? null
-                                    : "please enter your about",
+                                // validator: (val) => val.isNotEmpty
+                                //     ? null
+                                //     : "please enter your about",
                                 decoration: InputDecoration(
                                     hintText: "about",
                                     prefixIcon: Icon(Icons.people)),

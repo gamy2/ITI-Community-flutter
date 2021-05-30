@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:iti_community_flutter/services/mainService.dart';
 import 'package:iti_community_flutter/services/wrapper.dart';
 
 import 'package:provider/provider.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
                 ChangeNotifierProvider<AuthServices>.value(
                     value: AuthServices()),
                 StreamProvider<User>.value(
-                    value: AuthServices().user, initialData: null)
+                    value: AuthServices().user, initialData: null),
               ],
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
