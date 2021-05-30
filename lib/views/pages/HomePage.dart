@@ -6,6 +6,8 @@ import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:iti_community_flutter/views/pages/home/appHome.dart';
 import 'package:provider/provider.dart';
 
+import 'home/inzHome.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,7 +18,7 @@ class _HomePageState extends State<HomePage> {
   static TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    InzHome(),
     Groups(),
     Text(
       'Index 2: School',
