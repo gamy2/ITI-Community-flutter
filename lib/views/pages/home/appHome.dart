@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
+import 'package:iti_community_flutter/views/pages/home/posts.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:provider/provider.dart';
 
@@ -39,6 +41,7 @@ class _HomeState extends State<Home> {
     if (widget.uid == null) {
       authServices.logout();
     }
+
     if (isLoaded) {
       return Scaffold(
         body: Container(
@@ -92,20 +95,23 @@ class _HomeState extends State<Home> {
                                         )),
                                   ),
                                 ),
-                                InkWell(
-                                    child: Icon(Icons.settings),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Settings(),
-                                          ));
-                                    })
+                                SizedBox(
+                                  width: 58,
+                                  child: InkWell(
+                                      child: Icon(Icons.settings),
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => settings(),
+                                            ));
+                                      }),
+                                )
                               ],
                             ),
                           ),
                         )),
-                    SizedBox()
+                    Posts(widget.uid, userDetails)
                   ],
                 ),
               ),
