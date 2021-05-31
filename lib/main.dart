@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/services/wrapper.dart';
 
@@ -19,6 +21,21 @@ class MyApp extends StatelessWidget {
         builder: (context, snapshoot) {
           if (snapshoot.hasError) {
             return MaterialApp(
+              supportedLocales: [Locale('en'), Locale('ar')],
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate
+              ],
+              localeResolutionCallback: (locale, supportedLocales) {
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale.languageCode &&
+                      supportedLocale.countryCode == locale.countryCode) {
+                    return supportedLocale;
+                  }
+                }
+                return supportedLocales.first;
+              },
               debugShowCheckedModeBanner: false,
               home: Errorlog(snapshoot.error.toString()),
             );
@@ -32,11 +49,41 @@ class MyApp extends StatelessWidget {
               ],
               child: MaterialApp(
                 debugShowCheckedModeBanner: false,
+                supportedLocales: [Locale('en', 'UK'), Locale('ar', 'EG')],
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate
+                ],
+                localeResolutionCallback: (locale, supportedLocales) {
+                  for (var supportedLocale in supportedLocales) {
+                    if (supportedLocale.languageCode == locale.languageCode &&
+                        supportedLocale.countryCode == locale.countryCode) {
+                      return supportedLocale;
+                    }
+                  }
+                  return supportedLocales.first;
+                },
                 home: Wrapper(),
               ),
             );
           } else {
             return MaterialApp(
+              supportedLocales: [Locale('en'), Locale('ar')],
+              localizationsDelegates: [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate
+              ],
+              localeResolutionCallback: (locale, supportedLocales) {
+                for (var supportedLocale in supportedLocales) {
+                  if (supportedLocale.languageCode == locale.languageCode &&
+                      supportedLocale.countryCode == locale.countryCode) {
+                    return supportedLocale;
+                  }
+                }
+                return supportedLocales.first;
+              },
               debugShowCheckedModeBanner: false,
               home: Loading(),
             );

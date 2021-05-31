@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
@@ -41,7 +42,7 @@ class _GroupUsersState extends State<GroupUsers> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text('Members'),
+            title: Text(AppLocalizations.of(context).translate('Members')),
             backgroundColor: HexColor("801818"),
           ),
           body: new ListView(
@@ -81,7 +82,9 @@ class _GroupUsersState extends State<GroupUsers> {
                                       shape: BadgeShape.square,
                                       badgeColor: Colors.blue[300],
                                       borderRadius: BorderRadius.circular(8),
-                                      badgeContent: Text('Member',
+                                      badgeContent: Text(
+                                          AppLocalizations.of(context)
+                                              .translate('Member'),
                                           style: TextStyle(
                                               fontSize: 10,
                                               color: Colors.white,
@@ -100,7 +103,9 @@ class _GroupUsersState extends State<GroupUsers> {
                                       shape: BadgeShape.square,
                                       badgeColor: Colors.lightGreen[300],
                                       borderRadius: BorderRadius.circular(8),
-                                      badgeContent: Text('Admin',
+                                      badgeContent: Text(
+                                          AppLocalizations.of(context)
+                                              .translate('Admin'),
                                           style: TextStyle(
                                               fontSize: 10,
                                               color: Colors.white,
@@ -119,7 +124,9 @@ class _GroupUsersState extends State<GroupUsers> {
                                       shape: BadgeShape.square,
                                       badgeColor: Colors.grey[400],
                                       borderRadius: BorderRadius.circular(8),
-                                      badgeContent: Text('Subscriber',
+                                      badgeContent: Text(
+                                          AppLocalizations.of(context)
+                                              .translate('Subscriber'),
                                           style: TextStyle(
                                               fontSize: 10,
                                               color: Colors.white,
@@ -158,7 +165,8 @@ class _GroupUsersState extends State<GroupUsers> {
                               .map((String choice) {
                             return PopupMenuItem<String>(
                               value: choice,
-                              child: Text(choice),
+                              child: Text(AppLocalizations.of(context)
+                                  .translate(choice)),
                             );
                           }).toList();
                         },

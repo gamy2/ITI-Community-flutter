@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
@@ -53,7 +54,8 @@ class _CommentsState extends State<Comments> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Editing Comment',
+                                  AppLocalizations.of(context)
+                                      .translate('EditingComment'),
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.grey[450],
@@ -73,8 +75,10 @@ class _CommentsState extends State<Comments> {
                                           maxLines: null,
                                           keyboardType: TextInputType.multiline,
                                           decoration: InputDecoration.collapsed(
-                                              hintText:
-                                                  'Type Your Edit Comment Here..'),
+                                              hintText: AppLocalizations.of(
+                                                      context)
+                                                  .translate(
+                                                      'TypeYourEditCommentHere')),
                                           // ignore: missing_return
                                           validator: (value) {
                                             value.isEmpty;
@@ -101,7 +105,8 @@ class _CommentsState extends State<Comments> {
                                               children: [
                                                 Icon(Icons.edit),
                                                 Text(
-                                                  "Edit Comment",
+                                                  AppLocalizations.of(context)
+                                                      .translate('EditComment'),
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -214,7 +219,8 @@ class _CommentsState extends State<Comments> {
                         return {'Edit', 'Delete'}.map((String choice) {
                           return PopupMenuItem<String>(
                             value: choice,
-                            child: Text(choice),
+                            child: Text(
+                                AppLocalizations.of(context).translate(choice)),
                           );
                         }).toList();
                       },
