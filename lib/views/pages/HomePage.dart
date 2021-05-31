@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.group),
-            label: 'Groups',
+            label: AppLocalizations.of(context).translate('Groups'),
             backgroundColor: HexColor("801818"),
           ),
           BottomNavigationBarItem(

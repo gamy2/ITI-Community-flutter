@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupCard.dart';
 import 'package:iti_community_flutter/views/widgets/GroupsWidgets/GroupProfile/GroupUsers.dart';
@@ -128,12 +129,11 @@ class _SingleGroupState extends State<SingleGroup> {
                           )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 8),
+                      padding:
+                          const EdgeInsets.only(top: 12, right: 12, left: 12),
                       child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          SizedBox(
-                            width: 280,
-                          ),
                           Icon(
                             Icons.notifications,
                             color: Colors.black54,
@@ -210,10 +210,11 @@ class _SingleGroupState extends State<SingleGroup> {
                                                         keyboardType:
                                                             TextInputType
                                                                 .multiline,
-                                                        decoration: InputDecoration
-                                                            .collapsed(
-                                                                hintText:
-                                                                    'What Do You Thinking About?!..'),
+                                                        decoration: InputDecoration.collapsed(
+                                                            hintText: AppLocalizations
+                                                                    .of(context)
+                                                                .translate(
+                                                                    'whatDoYouThinkingAbout?...!')),
                                                         // ignore: missing_return
                                                         validator: (value) {
                                                           value.isEmpty;
@@ -249,7 +250,10 @@ class _SingleGroupState extends State<SingleGroup> {
                                                             children: [
                                                               Icon(Icons.edit),
                                                               Text(
-                                                                "Post",
+                                                                AppLocalizations.of(
+                                                                        context)
+                                                                    .translate(
+                                                                        'Post'),
                                                                 style: TextStyle(
                                                                     fontSize:
                                                                         15,
@@ -302,7 +306,8 @@ class _SingleGroupState extends State<SingleGroup> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Icon(Icons.edit),
-                                  Text('Write Post Here')
+                                  Text(AppLocalizations.of(context)
+                                      .translate('writePostHere'))
                                 ],
                               ),
                             ),
@@ -313,7 +318,8 @@ class _SingleGroupState extends State<SingleGroup> {
                       Column(
                         children: [
                           Text(
-                            'No Posts Yet',
+                            AppLocalizations.of(context)
+                                .translate('noPostsYet'),
                             style: TextStyle(
                                 fontSize: 20,
                                 fontStyle: FontStyle.italic,

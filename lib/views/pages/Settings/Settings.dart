@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
+import 'package:iti_community_flutter/main.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:provider/provider.dart';
 

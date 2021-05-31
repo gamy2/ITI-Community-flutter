@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
@@ -65,7 +66,7 @@ class _SinglePostState extends State<SinglePost> {
                     children: <Widget>[
                       Positioned(
                         // right: -40.0,
-                        top: 40.0,
+                        top: -40.0,
                         child: InkResponse(
                           onTap: () {
                             Navigator.of(context).pop();
@@ -85,7 +86,8 @@ class _SinglePostState extends State<SinglePost> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Editing Post',
+                                  AppLocalizations.of(context)
+                                      .translate('EditingPost'),
                                   style: TextStyle(
                                       fontSize: 15,
                                       color: Colors.grey[450],
@@ -105,8 +107,10 @@ class _SinglePostState extends State<SinglePost> {
                                           maxLines: null,
                                           keyboardType: TextInputType.multiline,
                                           decoration: InputDecoration.collapsed(
-                                              hintText:
-                                                  'Type Your Edit Post Here..'),
+                                              hintText: AppLocalizations.of(
+                                                      context)
+                                                  .translate(
+                                                      'TypeYourEditPostHere')),
                                           // ignore: missing_return
                                           validator: (value) {
                                             value.isEmpty;
@@ -133,7 +137,8 @@ class _SinglePostState extends State<SinglePost> {
                                               children: [
                                                 Icon(Icons.edit),
                                                 Text(
-                                                  "Edit Post",
+                                                  AppLocalizations.of(context)
+                                                      .translate('EditPost'),
                                                   style: TextStyle(
                                                       fontSize: 15,
                                                       fontWeight:
@@ -288,7 +293,9 @@ class _SinglePostState extends State<SinglePost> {
                                           .map((String choice) {
                                         return PopupMenuItem<String>(
                                           value: choice,
-                                          child: Text(choice),
+                                          child: Text(
+                                              AppLocalizations.of(context)
+                                                  .translate(choice)),
                                         );
                                       }).toList();
                                     },
@@ -351,7 +358,8 @@ class _SinglePostState extends State<SinglePost> {
                                     Widget result;
                                     if (count == 0) {
                                       result = Text(
-                                        "Like",
+                                        AppLocalizations.of(context)
+                                            .translate('Like'),
                                         style: TextStyle(color: color),
                                       );
                                     } else
@@ -412,10 +420,11 @@ class _SinglePostState extends State<SinglePost> {
                                                                   keyboardType:
                                                                       TextInputType
                                                                           .multiline,
-                                                                  decoration: InputDecoration
-                                                                      .collapsed(
-                                                                          hintText:
-                                                                              'Type Your Comment..'),
+                                                                  decoration: InputDecoration.collapsed(
+                                                                      hintText: AppLocalizations.of(
+                                                                              context)
+                                                                          .translate(
+                                                                              'TypeYourComment')),
                                                                   // ignore: missing_return
                                                                   validator:
                                                                       (value) {
@@ -458,7 +467,8 @@ class _SinglePostState extends State<SinglePost> {
                                                                         Icon(Icons
                                                                             .edit),
                                                                         Text(
-                                                                          "Comment",
+                                                                          AppLocalizations.of(context)
+                                                                              .translate('Comment'),
                                                                           style: TextStyle(
                                                                               fontSize: 15,
                                                                               fontWeight: FontWeight.bold),
@@ -501,7 +511,8 @@ class _SinglePostState extends State<SinglePost> {
                                         children: [
                                           Icon(Icons.mode_comment_outlined),
                                           Text(
-                                            '  Comment',
+                                            AppLocalizations.of(context)
+                                                .translate('Comment'),
                                             style: TextStyle(
                                                 color: Colors.grey,
                                                 fontSize: 15),
@@ -525,7 +536,8 @@ class _SinglePostState extends State<SinglePost> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Be First One Comment',
+                                  AppLocalizations.of(context)
+                                      .translate('BeFirstOneComment'),
                                   style: TextStyle(color: Colors.blue[300]),
                                 ),
                               ),

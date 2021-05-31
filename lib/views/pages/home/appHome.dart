@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:iti_community_flutter/views/pages/home/posts.dart';
@@ -110,6 +111,7 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
+
                         )),
                     SizedBox(
                       height: 10,
