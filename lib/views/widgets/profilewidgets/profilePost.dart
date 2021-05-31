@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iti_community_flutter/views/pages/home/profileComments.dart';
 
 class profilePost extends StatefulWidget {
   profilePost(this.id, this.data, this.uid, this.user);
@@ -62,6 +63,7 @@ class _profilePostState extends State<profilePost> {
                     ))
                 .toList(),
           ),
+          profileComments(widget.id, widget.uid, widget.user),
         ],
       ),
     );
