@@ -32,35 +32,44 @@ class _profileCommentsState extends State<profileComments> {
           }
           if (snapshot.hasData) {
             if (snapshot.data.docs.isEmpty) {
-              return Column(
-                children: [
-                  Text(
-                    'No Comments Yet',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontStyle: FontStyle.italic,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[400]),
-                  ),
-                ],
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Text(
+                      'No Comments Yet',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontStyle: FontStyle.italic,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[400]),
+                    ),
+                  ],
+                ),
               );
             } else {
               return Column(
                 children: [
-                  Text(
-                    "comments",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey[600]),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "comments",
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[800]),
+                    ),
                   ),
                   Column(
                       children: snapshot.data.docs
                           .map(
                             (e) => Padding(
                               padding: const EdgeInsets.all(2.0),
-                              child: profileComment(
-                                  e.id, e.data(), widget.uid, widget.user),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: profileComment(
+                                    e.id, e.data(), widget.uid, widget.user),
+                              ),
                             ),
                           )
                           .toList()),
