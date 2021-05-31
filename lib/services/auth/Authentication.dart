@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -36,6 +37,7 @@ class AuthServices with ChangeNotifier {
           _collectdata.sink.add(userDetails);
           User user = authResult.user;
           userID = user.uid;
+
           // store.setItem('uid', user.uid);
 
           setLoading(false);
@@ -78,12 +80,46 @@ class AuthServices with ChangeNotifier {
       if (documentSnapshot.exists) {
         // await storage.setItem('clickedDetails', "");
         await storage.setItem('clickedDetails', documentSnapshot.data());
+        return documentSnapshot.data();
       } else {
         print('2');
       }
     });
   }
 
+  Future getUserDetails(id) async {
+    // print(id);
+    // await storage.deleteItem('clickedDetails');
+    FirebaseFirestore.instance
+        .collection('users-details')
+        .doc(id)
+        .get()
+        .then((DocumentSnapshot documentSnapshot) async {
+      if (documentSnapshot.exists) {
+        // await storage.setItem('clickedDetails', "");
+        await storage.setItem('uDetails', documentSnapshot.data());
+      } else {
+        print('2');
+      }
+    });
+  }
+
+  Future getUserPostes(id) async {
+    // print(id);
+    // await storage.deleteItem('clickedDetails');
+    FirebaseFirestore.instance
+        .collection('users-details')
+        .doc(id)
+        .collection('MyHomePosts')
+        .snapshots();
+    //     .then((QuerySnapshot querySnapshot) async {
+    //   // await storage.setItem('clickedDetails', "");
+    //   await storage.setItem('userPosts', jsonEncode(querySnapshot.docs));
+    //   querySnapshot.docs.forEach((doc) {
+    //     print(doc["Body"]);
+    //   });
+    // }
+  }
   // Future getdata(id) async {
   //   FirebaseFirestore.instance
   //       .collection('users-details')
@@ -100,5 +136,4 @@ class AuthServices with ChangeNotifier {
 
   Stream<User> get user =>
       firebaseAuth.authStateChanges().map((event) => event);
-  Stream get stream => _collectdata.stream;
 }

@@ -49,11 +49,11 @@ class _ProfileState extends State<Profile> {
     authServices.getDataById(widget.clickedID);
     var userDetails = authServices.storage.getItem("clickedDetails");
 
-    // Timer.periodic(new Duration(seconds: 1), (timer) {
-    //   if (userDetails == null) {
-    //     authServices.logout();
-    //   }
-    // });
+    Timer.periodic(new Duration(seconds: 1), (timer) {
+      if (userDetails == null) {
+        authServices.logout();
+      }
+    });
     if (!isLoaded) {
       return new Container(
           color: Colors.white,
@@ -123,7 +123,7 @@ class _ProfileState extends State<Profile> {
                                             builder: (context) =>
                                                 ((widget.clickedID !=
                                                         AuthServices.userID)
-                                                    ? Settings()
+                                                    ? settings()
                                                     : EditProfile()),
                                           ));
                                     })
