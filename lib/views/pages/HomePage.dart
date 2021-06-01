@@ -5,6 +5,7 @@ import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:iti_community_flutter/views/pages/home/appHome.dart';
+import 'package:iti_community_flutter/views/pages/jobs/InzJobs.dart';
 import 'package:iti_community_flutter/views/pages/network/Inznetwork.dart';
 import 'package:provider/provider.dart';
 
@@ -23,10 +24,7 @@ class _HomePageState extends State<HomePage> {
     InzHome(),
     Groups(),
     InzNetwork(),
-    Text(
-      'Index 3: Test',
-      style: optionStyle,
-    ),
+    InzJobs(),
     settings()
   ];
   void _onItemTapped(int index) {
