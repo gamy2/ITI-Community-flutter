@@ -68,7 +68,7 @@ class _HomeState extends State<Home> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                Profile(AuthServices.userID)));
+                                                Profile(widget.uid)));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(5.0),
@@ -111,7 +111,6 @@ class _HomeState extends State<Home> {
                               ],
                             ),
                           ),
-
                         )),
                     SizedBox(
                       height: 10,
