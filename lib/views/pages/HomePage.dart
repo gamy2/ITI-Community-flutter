@@ -5,6 +5,7 @@ import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/GroupsView/Groups.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:iti_community_flutter/views/pages/home/appHome.dart';
+import 'package:iti_community_flutter/views/pages/network/Inznetwork.dart';
 import 'package:provider/provider.dart';
 
 import 'home/inzHome.dart';
@@ -21,10 +22,7 @@ class _HomePageState extends State<HomePage> {
   static List<Widget> _widgetOptions = <Widget>[
     InzHome(),
     Groups(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    InzNetwork(),
     Text(
       'Index 3: Test',
       style: optionStyle,
