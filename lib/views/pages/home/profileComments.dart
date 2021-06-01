@@ -20,6 +20,7 @@ class _profileCommentsState extends State<profileComments> {
         .collection('MyHomePosts')
         .doc(widget.postID)
         .collection('postsComments')
+        .orderBy('CommentDate')
         .snapshots();
     return StreamBuilder<QuerySnapshot>(
         stream: _comments,
