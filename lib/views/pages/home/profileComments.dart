@@ -65,12 +65,9 @@ class _profileCommentsState extends State<profileComments> {
                       children: snapshot.data.docs
                           .map(
                             (e) => Padding(
-                              padding: const EdgeInsets.all(2.0),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: profileComment(
-                                    e.id, e.data(), widget.uid, widget.user),
-                              ),
+                              padding: const EdgeInsets.all(4.0),
+                              child: profileComment(
+                                  e.id, e.data(), widget.uid, widget.user),
                             ),
                           )
                           .toList()),

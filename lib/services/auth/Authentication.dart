@@ -120,6 +120,7 @@ class AuthServices with ChangeNotifier {
     //   });
     // }
   }
+
   // Future getdata(id) async {
   //   FirebaseFirestore.instance
   //       .collection('users-details')
@@ -133,6 +134,18 @@ class AuthServices with ChangeNotifier {
   //     }
   //   });
   // }
+  Future getFriendList(id) async {
+    FirebaseFirestore.instance
+        .collection('users-details')
+        .doc(id)
+        .collection('friendList')
+        .get()
+        .then(((QuerySnapshot querySnapshot) async {
+      // var a = querySnapshot;
+
+      // storage.setItem('alpha', a);
+    }));
+  }
 
   Stream<User> get user =>
       firebaseAuth.authStateChanges().map((event) => event);

@@ -12,8 +12,9 @@ import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  Home(this.uid);
+  Home(this.uid, this.friendList);
   final uid;
+  final friendList;
   @override
   _HomeState createState() => _HomeState();
 }

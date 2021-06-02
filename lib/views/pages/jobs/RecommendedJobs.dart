@@ -59,7 +59,8 @@ class _RecommendedJobsState extends State<RecommendedJobs> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      singelJob(e.data())));
+                                                      singelJob(
+                                                          e.data(), e.id)));
                                         },
                                         child: Row(
                                           children: [

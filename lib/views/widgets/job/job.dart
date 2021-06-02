@@ -1,16 +1,27 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/services/auth/Authentication.dart';
+import 'package:provider/provider.dart';
 
 class singelJob extends StatefulWidget {
-  singelJob(this.jobData);
+  singelJob(this.jobData, this.jobId);
   final jobData;
+  final jobId;
   @override
   _singelJobState createState() => _singelJobState();
 }
 
 class _singelJobState extends State<singelJob> {
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
+    final authServices = Provider.of<AuthServices>(context);
+
+    authServices.getDataById(firebaseAuth.currentUser.uid);
+    var userDetails = authServices.storage.getItem("clickedDetails");
     return Scaffold(
       body: Container(
         color: HexColor("801818"),
@@ -25,23 +36,24 @@ class _singelJobState extends State<singelJob> {
                   SizedBox(
                     height: 28,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 18.0),
-                          child: InkWell(
-                              child: Icon(Icons.arrow_back),
-                              onTap: () {
-                                Navigator.pop(context);
-                              }),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 18.0),
+                            child: Icon(Icons.arrow_back),
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 20),
-                      SizedBox(width: 20)
-                    ],
+                        SizedBox(width: 20),
+                        SizedBox(width: 20)
+                      ],
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
@@ -71,37 +83,144 @@ class _singelJobState extends State<singelJob> {
                         SizedBox(
                           width: 1,
                         ),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Apply",
-                              style: TextStyle(color: Colors.white),
+                        InkWell(
+                          onTap: () {
+                            FirebaseFirestore.instance
+                                .collection('users-details')
+                                .doc(firebaseAuth.currentUser.uid)
+                                .collection('appliedJobs')
+                                .doc(widget.jobId)
+                                .set({
+                              'closingDate': widget.jobData['closingDate'],
+                              'company': {
+                                'ar': widget.jobData['company']['ar'],
+                                'en': widget.jobData['company']['en']
+                              },
+                              'companyLogoAvatar':
+                                  widget.jobData['companyLogoAvatar'],
+                              'description': {
+                                'ar': widget.jobData['description']['ar'],
+                                'en': widget.jobData['description']['en']
+                              },
+                              'employmentType': {
+                                'ar': widget.jobData['employmentType']['ar'],
+                                'en': widget.jobData['employmentType']['en']
+                              },
+                              'location': {
+                                'ar': widget.jobData['location']['ar'],
+                                'en': widget.jobData['location']['en']
+                              },
+                              'position': {
+                                'ar': widget.jobData['position']['ar'],
+                                'en': widget.jobData['position']['en']
+                              },
+                              'postedDate': widget.jobData['postedDate'],
+                              'seniorityLevel': {
+                                'ar': widget.jobData['seniorityLevel']['ar'],
+                                'en': widget.jobData['seniorityLevel']['en']
+                              },
+                              'worksFrom': {
+                                'ar': widget.jobData['worksFrom']['ar'],
+                                'en': widget.jobData['worksFrom']['en']
+                              }
+                            });
+                            FirebaseFirestore.instance
+                                .collection('jobs')
+                                .doc(widget.jobId)
+                                .collection('appliedUsers')
+                                .doc(firebaseAuth.currentUser.uid)
+                                .set({
+                              'about': userDetails['about'],
+                              'avatar': userDetails['avatar'],
+                              'avatarCover': userDetails['avatarCover'],
+                              'branch': userDetails['branch'],
+                              'experiences': userDetails['experiences'],
+                              'firstName': userDetails['firstName'],
+                              'jobTitle': userDetails['jobTitle'],
+                              'lastName': userDetails['lastName'],
+                              'nationalID': userDetails['nationalID'],
+                              'scholarshipDuration':
+                                  userDetails['scholarshipDuration'],
+                              'track': userDetails['track']
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Apply",
+                                style: TextStyle(color: Colors.white),
+                              ),
                             ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: HexColor("801818"),
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: HexColor("801818"),
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
+                              ),
                             ),
                           ),
                         ),
-                        Container(
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              "Save",
-                              style: TextStyle(color: HexColor("801818")),
+                        InkWell(
+                          onTap: () {
+                            FirebaseFirestore.instance
+                                .collection('users-details')
+                                .doc(firebaseAuth.currentUser.uid)
+                                .collection('savedJobs')
+                                .doc(widget.jobId)
+                                .set({
+                              'closingDate': widget.jobData['closingDate'],
+                              'company': {
+                                'ar': widget.jobData['company']['ar'],
+                                'en': widget.jobData['company']['en']
+                              },
+                              'companyLogoAvatar':
+                                  widget.jobData['companyLogoAvatar'],
+                              'description': {
+                                'ar': widget.jobData['description']['ar'],
+                                'en': widget.jobData['description']['en']
+                              },
+                              'employmentType': {
+                                'ar': widget.jobData['employmentType']['ar'],
+                                'en': widget.jobData['employmentType']['en']
+                              },
+                              'location': {
+                                'ar': widget.jobData['location']['ar'],
+                                'en': widget.jobData['location']['en']
+                              },
+                              'position': {
+                                'ar': widget.jobData['position']['ar'],
+                                'en': widget.jobData['position']['en']
+                              },
+                              'postedDate': widget.jobData['postedDate'],
+                              'seniorityLevel': {
+                                'ar': widget.jobData['seniorityLevel']['ar'],
+                                'en': widget.jobData['seniorityLevel']['en']
+                              },
+                              'worksFrom': {
+                                'ar': widget.jobData['worksFrom']['ar'],
+                                'en': widget.jobData['worksFrom']['en']
+                              }
+                            });
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Save",
+                                style: TextStyle(color: HexColor("801818")),
+                              ),
                             ),
-                          ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            border: Border.all(
-                              color: HexColor("801818"),
-                              width: 1,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                              border: Border.all(
+                                color: HexColor("801818"),
+                                width: 1,
+                              ),
                             ),
                           ),
                         ),
