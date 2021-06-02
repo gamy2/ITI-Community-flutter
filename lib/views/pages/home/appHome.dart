@@ -8,6 +8,7 @@ import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/auth/Authentication.dart';
 import 'package:iti_community_flutter/views/pages/Settings/Settings.dart';
 import 'package:iti_community_flutter/views/pages/home/posts.dart';
+import 'package:iti_community_flutter/views/pages/home/writePost.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 import 'package:provider/provider.dart';
 
@@ -80,21 +81,33 @@ class _HomeState extends State<Home> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
-                                  width: 65,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: DecoratedBox(
-                                        child: Center(
-                                            child: Text("+",
-                                                style: TextStyle(
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20))),
-                                        decoration: BoxDecoration(
-                                          color: HexColor("e4e1e1"),
-                                          borderRadius:
-                                              BorderRadius.circular(15),
-                                        )),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => writePost(
+                                                widget.uid,
+                                                userDetails,
+                                                widget.friendList)));
+                                  },
+                                  child: SizedBox(
+                                    width: 65,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: DecoratedBox(
+                                          child: Center(
+                                              child: Text("+",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20))),
+                                          decoration: BoxDecoration(
+                                            color: HexColor("e4e1e1"),
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          )),
+                                    ),
                                   ),
                                 ),
                                 SizedBox(
