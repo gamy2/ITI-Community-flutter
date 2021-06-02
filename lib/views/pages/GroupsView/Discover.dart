@@ -65,14 +65,15 @@ class _DiscoverGroupsState extends State<DiscoverGroups> {
                                 Expanded(
                                   child: new ListTile(
                                     onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SingleGroup(
-                                                  docs.id,
-                                                  docs.data(),
-                                                  i.id,
-                                                  (i.data() as Map))));
+                                      // Navigator.push(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => SingleGroup(
+                                      //             docs.id,
+                                      //             docs.data(),
+                                      //             i.id,
+                                      //             (i.data() as Map)))
+                                      //             );
                                     },
                                     leading: Image.network(
                                         (docs.data() as Map)['Img']),
