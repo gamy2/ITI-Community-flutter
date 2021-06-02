@@ -79,7 +79,8 @@ class _profilePostState extends State<profilePost> {
                           ))
                       .toList())
               : Text(' '),
-          profileComments(widget.id, widget.uid, widget.user),
+          profileComments(
+              widget.data['Auther']['id'], widget.id, widget.uid, widget.user),
         ],
       ),
     );

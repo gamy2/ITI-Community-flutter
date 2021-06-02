@@ -143,7 +143,7 @@ class _connectRequestState extends State<connectRequest> {
                                               .collection('friendList')
                                               .doc(e.id)
                                               .set({
-                                            // 'addedDate': DateTime.now(),
+                                            'addedDate': DateTime.now(),
                                             'avatar':
                                                 (e.data() as Map)['avatar'],
                                             'avatarCover': (e.data()
@@ -161,7 +161,7 @@ class _connectRequestState extends State<connectRequest> {
                                               .collection('friendList')
                                               .doc(firebaseAuth.currentUser.uid)
                                               .set({
-                                            // 'addedDate': DateTime.now(),
+                                            'addedDate': DateTime.now(),
                                             'avatar': userDetails['avatar'],
                                             'avatarCover':
                                                 userDetails['avatarCover'],
