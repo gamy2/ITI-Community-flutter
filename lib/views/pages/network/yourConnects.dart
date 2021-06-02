@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/views/pages/profile/profile.dart';
 
 class yourConnects extends StatefulWidget {
@@ -54,7 +55,7 @@ class _yourConnectsState extends State<yourConnects> {
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       InkWell(
                                         child: Row(
@@ -102,7 +103,49 @@ class _yourConnectsState extends State<yourConnects> {
                                       SizedBox(
                                         width: 1,
                                       ),
-                                      Row(),
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              FirebaseFirestore.instance
+                                                  .collection('users-details')
+                                                  .doc(firebaseAuth
+                                                      .currentUser.uid)
+                                                  .collection('friendList')
+                                                  .doc(e.id)
+                                                  .delete();
+                                              FirebaseFirestore.instance
+                                                  .collection('users-details')
+                                                  .doc(e.id)
+                                                  .collection('friendList')
+                                                  .doc(firebaseAuth
+                                                      .currentUser.uid)
+                                                  .delete();
+                                            },
+                                            child: Container(
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(10.0),
+                                                child: Text(
+                                                  "Delete",
+                                                  style: TextStyle(
+                                                      color:
+                                                          HexColor("801818")),
+                                                ),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                  color: HexColor("801818"),
+                                                  width: 1,
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   )
                                 ],

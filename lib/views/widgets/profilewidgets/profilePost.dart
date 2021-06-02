@@ -19,41 +19,45 @@ class _profilePostState extends State<profilePost> {
       color: Colors.white,
       child: Column(
         children: [
-          InkWell(
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: CircleAvatar(
-                    backgroundImage:
-                        NetworkImage(widget.data["Auther"]['avatar']),
-                    radius: 30.0,
+          (widget.data["Auther"]['avatar'] != null
+              ? InkWell(
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(widget.data["Auther"]['avatar']),
+                          radius: 30.0,
+                        ),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.data["Auther"]['firstName'] +
+                                ' ' +
+                                widget.data["Auther"]['lastName'],
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                          Text(widget.data["Auther"]['jobTitle'])
+                        ],
+                      )
+                    ],
                   ),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.data["Auther"]['firstName'] +
-                          ' ' +
-                          widget.data["Auther"]['lastName'],
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text(widget.data["Auther"]['jobTitle'])
-                  ],
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Profile(
+                                (widget.data['Auther']['id'] != null
+                                    ? widget.data['Auther']['id']
+                                    : ''))));
+                  },
                 )
-              ],
-            ),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          Profile(widget.data['Auther']['id'])));
-            },
-          ),
+              : Text(' ')),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(widget.data["Body"]),
@@ -74,7 +78,7 @@ class _profilePostState extends State<profilePost> {
                             ),
                           ))
                       .toList())
-              : Text(''),
+              : Text(' '),
           profileComments(widget.id, widget.uid, widget.user),
         ],
       ),

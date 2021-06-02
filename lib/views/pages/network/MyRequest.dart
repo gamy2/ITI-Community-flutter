@@ -48,7 +48,7 @@ class _myRquestState extends State<myRquest> {
               return SingleChildScrollView(
                   child: Column(
                       children: snapshot.data.docs
-                          .map((e) => mySentRequest(e.data()))
+                          .map((e) => mySentRequest(e.data(), e.id))
                           .toList()));
             }
           }

@@ -62,7 +62,8 @@ class _savedJobsState extends State<savedJobs> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      singelJob(e.data())));
+                                                      singelJob(
+                                                          e.data(), e.id)));
                                         },
                                         child: Row(
                                           children: [

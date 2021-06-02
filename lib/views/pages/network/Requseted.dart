@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class connectRequest extends StatefulWidget {
   @override
@@ -52,7 +53,7 @@ class _connectRequestState extends State<connectRequest> {
                             children: [
                               Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -86,7 +87,46 @@ class _connectRequestState extends State<connectRequest> {
                                   SizedBox(
                                     width: 1,
                                   ),
-                                  Row()
+                                  Row(
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          FirebaseFirestore.instance
+                                              .collection('users-details')
+                                              .doc(firebaseAuth.currentUser.uid)
+                                              .collection('friendRequest')
+                                              .doc(e.id)
+                                              .delete();
+                                          FirebaseFirestore.instance
+                                              .collection('users-details')
+                                              .doc(e.id)
+                                              .collection(
+                                                  'MySentfriendRequests')
+                                              .doc(firebaseAuth.currentUser.uid)
+                                              .delete();
+                                        },
+                                        child: Container(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Text(
+                                              "Cancel",
+                                              style: TextStyle(
+                                                  color: HexColor("801818")),
+                                            ),
+                                          ),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              color: HexColor("801818"),
+                                              width: 1,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
                                 ],
                               )
                             ],
