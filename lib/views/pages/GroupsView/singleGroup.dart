@@ -29,7 +29,8 @@ class _SingleGroupState extends State<SingleGroup> {
   Widget build(BuildContext context) {
     final authServices = Provider.of<AuthServices>(context);
     final userDetails = authServices.storage.getItem('userDetails');
-    final uid = AuthServices.userID;
+    final uid = authServices.storage.getItem('uid');
+
     CollectionReference post =
         FirebaseFirestore.instance.collection('PostGroup');
     Future writePost(String body) async {
@@ -52,7 +53,6 @@ class _SingleGroupState extends State<SingleGroup> {
     Stream<QuerySnapshot> _fb2 = FirebaseFirestore.instance
         .collection('PostGroup')
         .orderBy('PostedDate', descending: true)
-        // .limit(1)
         .where("GroupId", isEqualTo: widget.id)
         .snapshots();
 
@@ -328,6 +328,22 @@ class _SingleGroupState extends State<SingleGroup> {
                           ),
                         ],
                       ),
+                    if (widget.uRole == uid && widget.user['Role'] == 0)
+                      Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)
+                                .translate('NotReconized'),
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey[400],
+                                backgroundColor: Colors.lightBlue[50]),
+                          ),
+                        ],
+                      )),
                     if (widget.uRole == uid && widget.user['Role'] > 0)
                       Column(
                           children: snapshot.data.docs
