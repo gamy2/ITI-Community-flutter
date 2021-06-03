@@ -64,23 +64,36 @@ class _profileCommentsState extends State<profileComments> {
                           fontWeight: FontWeight.bold,
                           color: Colors.grey[400]),
                     ),
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "Leave The First Comment...",
-                          style: TextStyle(color: HexColor("801818")),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => writeComment(
+                                    widget.autherId,
+                                    widget.postID,
+                                    widget.myuid,
+                                    widget.user,
+                                    friendList)));
+                      },
+                      child: Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            "Leave The First Comment...",
+                            style: TextStyle(color: HexColor("801818")),
+                          ),
                         ),
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        border: Border.all(
-                          color: HexColor("801818"),
-                          width: 1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white,
+                          border: Border.all(
+                            color: HexColor("801818"),
+                            width: 1,
+                          ),
                         ),
+                        width: double.infinity,
                       ),
-                      width: double.infinity,
                     ),
                   ],
                 ),

@@ -31,7 +31,7 @@ class _PostsState extends State<Posts> {
 
   @override
   Widget build(BuildContext context) {
-    var index = 10;
+    var index = 5;
     if (isLoaded) {
       Stream<QuerySnapshot> _posts = FirebaseFirestore.instance
           .collection('users-details')
@@ -49,7 +49,7 @@ class _PostsState extends State<Posts> {
             }
             if (!snapshot.hasData) {
               // show loading while waiting for real data
-              return CircularProgressIndicator();
+              return Text(" ");
             }
             // if (snapshot.connectionState == ConnectionState.waiting) {
             //   // return Spinner();
@@ -172,7 +172,7 @@ class _fullPostsState extends State<fullPosts> {
           .doc(widget.uid)
           .collection('MyHomePosts')
           .orderBy('PostedDate', descending: true)
-          .limit(widget.index)
+          // .limit(widget.index)
           .snapshots();
       return StreamBuilder<QuerySnapshot>(
           stream: _posts,
@@ -235,37 +235,37 @@ class _fullPostsState extends State<fullPosts> {
                                       ),
                                     )
                                     .toList()),
-                            Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  child: Container(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: Text(
-                                        "More",
-                                        style: TextStyle(color: Colors.white),
-                                      ),
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: HexColor("801818"),
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    var nextIndex = widget.index + 10;
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => fullPosts(
-                                                widget.uid,
-                                                widget.user,
-                                                nextIndex)));
-                                  },
-                                ))
+                            // Padding(
+                            //     padding: const EdgeInsets.all(8.0),
+                            //     child: InkWell(
+                            //       child: Container(
+                            //         child: Padding(
+                            //           padding: const EdgeInsets.all(10.0),
+                            //           child: Text(
+                            //             "More",
+                            //             style: TextStyle(color: Colors.white),
+                            //           ),
+                            //         ),
+                            //         decoration: BoxDecoration(
+                            //           borderRadius: BorderRadius.circular(10),
+                            //           color: HexColor("801818"),
+                            //           border: Border.all(
+                            //             color: Colors.white,
+                            //             width: 1,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //       onTap: () {
+                            //         var nextIndex = widget.index + 10;
+                            //         Navigator.push(
+                            //             context,
+                            //             MaterialPageRoute(
+                            //                 builder: (context) => fullPosts(
+                            //                     widget.uid,
+                            //                     widget.user,
+                            //                     nextIndex)));
+                            //       },
+                            //     ))
                           ],
                         ),
                       ),

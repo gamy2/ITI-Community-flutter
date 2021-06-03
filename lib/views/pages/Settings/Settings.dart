@@ -62,8 +62,8 @@ class _settingsState extends State<settings> {
                         color: Colors.blue[800]),
                   ),
                   onTap: () {
-                    // authServices.logout();
-                    print(friendList);
+                    authServices.logout();
+                    // print(friendList);
                     // var s = AuthServices.store.getItem('uid');
                     // print(s);
                     // var s = AuthServices.userID;
@@ -84,7 +84,7 @@ class _settingsState extends State<settings> {
                         color: Colors.blue[800]),
                   ),
                   onTap: () {
-                    // belal.logout();
+                    // authServices.logout();
                     // print(belal.userDetails);
                     print(userDetails);
                     // var s = AuthServices.store.getItem('uid');

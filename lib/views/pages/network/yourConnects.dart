@@ -82,12 +82,16 @@ class _yourConnectsState extends State<yourConnects> {
                                                       (e.data()
                                                           as Map)['lastName'],
                                                   style: TextStyle(
-                                                      fontSize: 20,
+                                                      fontSize: 17,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
-                                                Text((e.data()
-                                                    as Map)['jobTitle'])
+                                                Text(
+                                                  (e.data() as Map)['jobTitle'],
+                                                  style: TextStyle(
+                                                    fontSize: 12,
+                                                  ),
+                                                )
                                               ],
                                             )
                                           ],
