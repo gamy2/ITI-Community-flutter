@@ -57,11 +57,11 @@ class _LoginState extends State<Login> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(bottom: 20, top: 20),
+                            padding: const EdgeInsets.only(bottom: 20, top: 60),
                             child: Container(
                                 child: Image(
                               image: AssetImage('assets/images/iti1.png'),
-                              height: 100,
+                              height: 160,
                             )),
                           ),
                           Padding(
@@ -124,32 +124,32 @@ class _LoginState extends State<Login> {
                           SizedBox(
                             height: 22,
                           ),
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              "Forget Password?",
-                              style: TextStyle(
-                                  color: HexColor("801818"),
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          SizedBox(height: 22),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Dont Have Any Account?"),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              InkWell(
-                                child: Text("Rgister",
-                                    style: TextStyle(
-                                        color: HexColor("801818"),
-                                        fontWeight: FontWeight.bold)),
-                                onTap: () => widget.togglescreen(),
-                              )
-                            ],
-                          )
+                          // InkWell(
+                          //   onTap: () {},
+                          //   child: Text(
+                          //     "Forget Password?",
+                          //     style: TextStyle(
+                          //         color: HexColor("801818"),
+                          //         fontWeight: FontWeight.bold),
+                          //   ),
+                          // ),
+                          // SizedBox(height: 22),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.center,
+                          //   children: [
+                          //     Text("Dont Have Any Account?"),
+                          //     SizedBox(
+                          //       width: 10,
+                          //     ),
+                          //     InkWell(
+                          //       child: Text("Rgister",
+                          //           style: TextStyle(
+                          //               color: HexColor("801818"),
+                          //               fontWeight: FontWeight.bold)),
+                          //       onTap: () => widget.togglescreen(),
+                          //     )
+                          //   ],
+                          // )
                         ],
                       ),
                     ))),

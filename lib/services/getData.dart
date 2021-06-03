@@ -21,43 +21,39 @@ class Getdata {
     return friendList;
   }
 
-  Future<List<String>> getMyRequests(id) async {
-    List<String> friendList = [];
+  Future<List> getBranches() async {
+    List Branches = [];
     try {
       FirebaseFirestore.instance
-          .collection('users-details')
-          .doc(id)
-          .collection('friendList')
+          .collection('Branches')
           .get()
           .then((QuerySnapshot res) {
         res.docs.forEach((doc) {
-          friendList.add(doc.id);
+          Branches.add(doc);
         });
-        print(friendList.length);
+        print(Branches.length);
       });
     } catch (e) {
       print(e);
     }
-    return friendList;
+    return Branches;
   }
 
-  Future<List<String>> getRequest(id) async {
-    List<String> friendList = [];
+  Future<List> getTracks() async {
+    List Tracks = [];
     try {
       FirebaseFirestore.instance
-          .collection('users-details')
-          .doc(id)
-          .collection('friendList')
+          .collection('Tracks')
           .get()
           .then((QuerySnapshot res) {
         res.docs.forEach((doc) {
-          friendList.add(doc.id);
+          Tracks.add(doc);
         });
-        print(friendList.length);
+        print(Tracks.length);
       });
     } catch (e) {
       print(e);
     }
-    return friendList;
+    return Tracks;
   }
 }

@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:iti_community_flutter/services/getData.dart';
 
 class Registration extends StatefulWidget {
   final Function togglescreen;
@@ -13,6 +15,22 @@ class Registration extends StatefulWidget {
 }
 
 class _RegistrationState extends State<Registration> {
+  List Tracks;
+  List Branches;
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  getData() async {
+    Tracks = await Getdata().getTracks();
+    // friendList.forEach((element) {});
+    Branches = await Getdata().getBranches();
+    if (this.mounted) setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
   @override
   Widget build(BuildContext context) {
     var Firstname;
@@ -128,38 +146,13 @@ class _RegistrationState extends State<Registration> {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Container(
-                            width: 150,
-                            child: Column(
-                              children: [
-                                Text("branch"),
-                                DropdownButton(
-                                  value: dropdownValue,
-                                  icon: Icon(Icons.arrow_downward),
-                                  iconSize: 24,
-                                  elevation: 16,
-                                  style: TextStyle(color: Colors.deepPurple),
-                                  underline: Container(
-                                    height: 2,
-                                    color: Colors.deepPurpleAccent,
-                                  ),
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      dropdownValue = newValue;
-                                    });
-                                  },
-                                  items: ['One', 'Two', 'Free', 'Four']
-                                      .map<DropdownMenuItem>((
-                                    value,
-                                  ) {
-                                    return DropdownMenuItem(
-                                      value: value,
-                                      child: Text(value),
-                                    );
-                                  }).toList(),
-                                ),
-                              ],
-                            ),
+                          DropdownButton(
+                            items: Branches.map((item) {
+                              return new DropdownMenuItem(
+                                child: new Text((item['data']['name'])),
+                                value: item['id'].toString(),
+                              );
+                            }).toList(),
                           ),
                           Container(
                             width: 150,

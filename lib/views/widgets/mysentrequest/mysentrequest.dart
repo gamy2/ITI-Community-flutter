@@ -82,9 +82,12 @@ class _mySentRequestState extends State<mySentRequest> {
                           Text(
                             (widget.data['firstName']),
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
+                                fontSize: 17, fontWeight: FontWeight.bold),
                           ),
-                          Text(widget.data['jobTitle'])
+                          Text(
+                            widget.data['jobTitle'],
+                            style: TextStyle(fontSize: 12),
+                          )
                         ],
                       )
                     ],
