@@ -72,29 +72,29 @@ class _settingsState extends State<settings> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                child: InkWell(
-                  child: Text(
-                    'get data',
-                    style: TextStyle(
-                        fontSize: 28,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue[800]),
-                  ),
-                  onTap: () {
-                    // authServices.logout();
-                    // print(belal.userDetails);
-                    print(userDetails);
-                    // var s = AuthServices.store.getItem('uid');
-                    // print(s);
-                    // var s = AuthServices.userID;
-                    // print(s);
-                  },
-                ),
-              ),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: Card(
+            //     child: InkWell(
+            //       child: Text(
+            //         'get data',
+            //         style: TextStyle(
+            //             fontSize: 28,
+            //             fontWeight: FontWeight.bold,
+            //             color: Colors.blue[800]),
+            //       ),
+            //       onTap: () {
+            //         // authServices.logout();
+            //         // print(belal.userDetails);
+            //         print(userDetails);
+            //         // var s = AuthServices.store.getItem('uid');
+            //         // print(s);
+            //         // var s = AuthServices.userID;
+            //         // print(s);
+            //       },
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ),
