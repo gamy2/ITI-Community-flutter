@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:full_screen_image/full_screen_image.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:iti_community_flutter/app_localizations.dart';
 import 'package:iti_community_flutter/services/GroupsService.dart';
@@ -319,9 +320,11 @@ class _SinglePostState extends State<SinglePost> {
                                         width: 100,
                                         child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Image(
-                                            image: NetworkImage(imgUrl),
-                                            height: 80,
+                                          child: FullScreenWidget(
+                                            child: Image(
+                                              image: NetworkImage(imgUrl),
+                                              height: 80,
+                                            ),
                                           ),
                                         ),
                                       ))
